@@ -18,7 +18,7 @@ tNo *inicializaAVL (void);
 tNo *criaNo (int c);
 
 tNo *insere (int v, tNo *no); 
-tNo *busca (int c); 
+tNo *busca (int c, tNo *no); 
 /*void remove (tNo *no); 
 */
 #endif

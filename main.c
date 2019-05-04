@@ -23,17 +23,24 @@ int main () {
 		scanf("%d", &valor);
 		//printf("operação: %c, valor: %d\n", op, valor);
 
-		if (op == 'i') 
+		if (op == 'i') {
 			no = insere(valor, raiz);
-		printf ("O inserido é: %d \n", no->chave);
+			if (raiz == NULL)
+				raiz = no;
+		}
+
 /*		if (op == 'r')
 			no = busca(valor, raiz);
 			remove(no);
 */
 
 		op = getchar();
-		//printf("OP: %c\n", op); // apagar
 	}
+
+	printf("vc quer raiz? %d\n", raiz->chave);
+
+	no = busca(48, raiz); // deletar
+	printf ("busca retornou: %d \n", no->chave); // DELETAR
 
 	// impressao
 }

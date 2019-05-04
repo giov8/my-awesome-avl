@@ -52,6 +52,25 @@ tNo *insere (int v, tNo *no) { // recebe a raiz
 }
 
 //---------------------------------------
+//	4. Busca iterativa
+//---------------------------------------
+tNo *busca (int c, tNo *no) { // recebe a raiz
+	while ((no != NULL) && (c != no->chave)) {
+		printf("no chave: %d\n", no->chave);
+		if (c < no->chave) {
+			no = no->esq;
+			printf("foi para esquerda! alegria!\n");
+		}
+		else{
+			no = no->dir;
+			printf("foi para direita! euforia!\n");
+		}
+	}
+	return no;
+}
+
+
+/*//---------------------------------------
 //	4. Busca
 //---------------------------------------
 tNo *busca (int c, tNo *no) { // recebe a raiz
@@ -60,11 +79,11 @@ tNo *busca (int c, tNo *no) { // recebe a raiz
 	if (c == no->chave)
 		return no;
 	if (c < no->chave)
-		return search (c, no->esq);
+		return busca (c, no->esq);
 	else
-		return search (c, no->dir);
+		return busca (c, no->dir);
 }
-/*
+
 //---------------------------------------
 //	5. Remove
 //---------------------------------------
