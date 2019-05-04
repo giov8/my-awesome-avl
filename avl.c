@@ -1,31 +1,36 @@
+//**************"API AVL"****************
+//	Autores: 							*
+//			Giovani Marciniak 			*
+//			Marisa Sel Franco			*
+//	Informática Biomédica - UFPR 		*
+//	Algoritmos e Estrutura de Dados III	*
+//***************************************
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "avl.h"
 
-int main () {
+//---------------------------------------
+//	1. Inicialização
+//	DESCRIÇÃO: inicializa a árvore AVL 
+//	vazia
+//---------------------------------------
+tNo *inicializaAVL (void) {
+	return NULL;
+}
 
-	char op = '\n';
-	int valor = 0;
-
-	int i = 0;
-
-	while (1) {
-		op = getchar ();
-		if (op == EOF) break;
-		scanf("%d", &valor);
-		printf("operação: %c, valor: %d\n", op, valor);
-
-		if (op == 'i') 
-			insere(valor, raiz);
-
-		if (op == 'r')
-			no = busca(valor, raiz)
-			remove(no);
-
-		op = getchar();
-		printf("OP: %c\n", op); // apagar
-
-	}
-
-	// 
+//---------------------------------------
+//	2. Cria nó
+//	DESCRIÇÃO: aloca memória para novo nó,
+//	com ponteiro pai para NULL e fator de
+//	balanceamento 0
+//---------------------------------------
+tNo *criaNo (int c) {
+	tNo *no = malloc (sizeof (tNo));
+	no->chave = c;
+	no->dir = NULL;
+	no->esq = NULL;
+	no->pai = NULL;
+	no->fb = 0; 
+	return no;
 }
