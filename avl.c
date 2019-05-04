@@ -34,3 +34,42 @@ tNo *criaNo (int c) {
 	no->fb = 0; 
 	return no;
 }
+
+//---------------------------------------
+//	3. Insere
+//---------------------------------------
+tNo *insere (int v, tNo *no) { // recebe a raiz
+
+	if (no == NULL)
+		return criaNo (v);
+	if (v == no->chave)
+		return no;
+	if (v < no->chave)
+		no->esq = insere (v, no->esq);
+	else
+		no->dir = insere (v, no->dir);
+	return no;
+}
+
+//---------------------------------------
+//	4. Busca
+//---------------------------------------
+tNo *busca (int c, tNo *no) { // recebe a raiz
+	if (no == NULL)
+		return NULL;
+	if (c == no->chave)
+		return no;
+	if (c < no->chave)
+		return search (c, no->esq);
+	else
+		return search (c, no->dir);
+}
+/*
+//---------------------------------------
+//	5. Remove
+//---------------------------------------
+void remove (tNo *no) {
+
+
+}
+*/

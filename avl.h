@@ -17,4 +17,8 @@ typedef struct tNo {
 tNo *inicializaAVL (void);
 tNo *criaNo (int c);
 
+tNo *insere (int v, tNo *no); 
+tNo *busca (int c); 
+/*void remove (tNo *no); 
+*/
 #endif
