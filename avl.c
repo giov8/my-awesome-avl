@@ -56,26 +56,9 @@ tNo *insere (int v, tNo *raiz) { // recebe a raiz
 		pai->esq = no;
 	else
 		pai->dir = no;
-	no->pai = pai;
+	no->pai = pai;				// o ponteiro pai é ajustado
 	return no;
 }
-/*
-//---------------------------------------
-//	3. Insere
-//---------------------------------------
-tNo *insere (int v, tNo *no) { // recebe a raiz
-
-	if (no == NULL)
-		return criaNo (v);
-	if (v == no->chave)
-		return no;
-	if (v < no->chave)
-		no->esq = insere (v, no->esq);
-	else
-		no->dir = insere (v, no->dir);
-
-	return no;
-}*/
 
 //---------------------------------------
 //	4. Busca iterativa
@@ -90,16 +73,8 @@ tNo *busca (int c, tNo *no) { // recebe a raiz
 	return no;
 }
 
-
 //---------------------------------------
-//	5. Remove
-//---------------------------------------
-tNo *exclui (tNo *no) {
-
-}
-
-//---------------------------------------
-//	15. Ajusta pai
+//	5. Ajusta pai
 //---------------------------------------
 void ajustaPai (tNo *no, tNo *novo) {
 	if (no->pai->esq == no)
@@ -111,15 +86,24 @@ void ajustaPai (tNo *no, tNo *novo) {
 	return;
 }
 
-/*
 //---------------------------------------
-//	0. Ajusta Árvore AVL
+//	0. Exclusão
 //---------------------------------------
-void ajustaAVL(no, raiz) {
+tNo *exclui (tNo *no) {
 
 }
 
-*/
+
+
+
+//---------------------------------------
+//	0. Ajusta Árvore AVL
+//---------------------------------------
+void ajustaAVL(tNo *no, *raiz) {
+
+}
+
+
 //---------------------------------------
 //	10. Visita
 //---------------------------------------
@@ -140,4 +124,88 @@ void imprimeEmOrdem (tNo *no, int h) {
 		imprimeEmOrdem (no->dir, h+1);
 	}
 	return;
+}
+
+
+//---------------------------------------
+//	11. Minimum
+//---------------------------------------
+tNode min (tNode *node) {
+	if (node->left == NULL)
+		return node->key;
+	else
+		return min (node->left);
+}
+
+//---------------------------------------
+//	13. Successor
+//---------------------------------------
+tNode successor (tNode *node) {
+	if (node->rigth != NULL)
+		return min (node->right);
+	else {
+		tNode *s = node->father;
+		while ((s != NULL) && (node == s->right)) {
+			node = s;
+			s = s->father;
+		}
+	}
+	return s;
+}
+
+
+//---------------------------------------
+//	17. Right rotation
+//---------------------------------------
+tNode *rightRotation (tNode *node) {
+	tNode *aux;
+	aux = node->left;
+	node->left = aux->right;
+	aux->father = node->father;
+	node->father = aux;
+	aux->right->father = node;
+	aux->right = node;
+	return aux;
+}
+
+//---------------------------------------
+//	18. Left rotation
+//---------------------------------------
+tNode *leftRotation (tNode *node) {
+	tNode *aux;
+	aux = node->rigth;
+	node->right = aux->left;
+	aux->father = node->father;
+	node->father = aux;
+	aux->left->father = node;
+	aux->left = node;
+	return aux;
+}
+
+//---------------------------------------
+//	16. Delete
+//---------------------------------------
+void del (tNode *node) {
+	if ((node->left == NULL) && (node->rigth == NULL)) {
+		adjustFather (node, NULL);
+		remove (node);									// verificar se eh um free mesmo
+	}
+	else 
+		if (node->left == NULL) {
+		adjustFather (node, node->right);
+		remove (node);
+		}
+		else
+			if (node->right == NULL) {
+				adjustFather (node, node->left);
+				remove (node);
+			}
+			else {
+				tNode *s = successor (node);
+				adjustFather (s, s->right);
+				s->left = node->left;
+				s->right = node->right;
+				adjustFather (node, s);
+				remove (node);
+			}
 }

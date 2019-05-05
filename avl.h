@@ -22,6 +22,6 @@ tNo *busca (int c, tNo *no);
 tNo *exclui (tNo *no); 
 void visita (tNo *no, int h);
 void imprimeEmOrdem (tNo *no, int h);
-//void ajustaAVL(no, raiz);
+void ajustaAVL(tNo *no, *raiz);
 
 #endif
