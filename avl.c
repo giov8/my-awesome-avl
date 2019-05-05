@@ -36,6 +36,31 @@ tNo *criaNo (int c) {
 }
 
 //---------------------------------------
+//	3. Insere iterativa com pai
+//---------------------------------------
+tNo *insere (int v, tNo *raiz) { // recebe a raiz
+
+	tNo *no, *pai;
+	if (raiz == NULL) 
+		return criaNo (v);
+	no = raiz;
+	while (no != NULL){
+		pai = no;
+		if (v < no->chave)
+			no = no->esq;
+		else
+			no = no->dir;
+	}
+	no = criaNo(v);
+	if (v < pai->chave)
+		pai->esq = no;
+	else
+		pai->dir = no;
+	no->pai = pai;
+	return no;
+}
+/*
+//---------------------------------------
 //	3. Insere
 //---------------------------------------
 tNo *insere (int v, tNo *no) { // recebe a raiz
@@ -48,8 +73,9 @@ tNo *insere (int v, tNo *no) { // recebe a raiz
 		no->esq = insere (v, no->esq);
 	else
 		no->dir = insere (v, no->dir);
+
 	return no;
-}
+}*/
 
 //---------------------------------------
 //	4. Busca iterativa
@@ -65,23 +91,42 @@ tNo *busca (int c, tNo *no) { // recebe a raiz
 }
 
 
-
-
-
 //---------------------------------------
 //	5. Remove
 //---------------------------------------
 tNo *exclui (tNo *no) {
 
+}
+
+//---------------------------------------
+//	15. Ajusta pai
+//---------------------------------------
+void ajustaPai (tNo *no, tNo *novo) {
+	if (no->pai->esq == no)
+		no->pai->dir = novo;
+	else
+		no->pai->dir = novo;
+	if (novo != NULL)
+		novo->pai = no->pai;
+	return;
+}
+
+/*
+//---------------------------------------
+//	0. Ajusta Árvore AVL
+//---------------------------------------
+void ajustaAVL(no, raiz) {
 
 }
 
-
+*/
 //---------------------------------------
 //	10. Visita
 //---------------------------------------
 void visita (tNo *no, int h) {
 	printf("%d,%d\n", no->chave, h);
+	if (no->pai != NULL)
+		printf("o nó pai de %d é %d\n", no->chave, no->pai->chave);
 	return;
 }
 

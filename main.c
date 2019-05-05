@@ -12,10 +12,15 @@
 
 int main () {
 
-	char op = '\n';
 	int valor = 0;
 	tNo *raiz = inicializaAVL();
 	tNo *no;
+
+	char op = getchar();
+	scanf("%d", &valor);
+	raiz = insere(valor, raiz);
+
+	op = getchar ();					// enter ou barra ene
 
 	while (1) {
 		op = getchar ();
@@ -25,8 +30,7 @@ int main () {
 
 		if (op == 'i') {
 			no = insere(valor, raiz);
-			if (raiz == NULL)
-				raiz = no;
+			//ajustaAVL(no, raiz);
 		}
 
 /*		if (op == 'r')
@@ -34,14 +38,9 @@ int main () {
 			remove(no);
 */
 
-		op = getchar();
+		op = getchar(); 						// Recebe o "Enter" ou '\n'
 	}
 
-	printf("vc quer raiz? %d\n", raiz->chave);// deletar
-
-	no = busca(48, raiz); // deletar
-	printf ("busca retornou: %d \n", no->chave); // DELETAR
-	
 	imprimeEmOrdem (raiz, 0);
 
 	// impressao
