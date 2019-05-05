@@ -56,39 +56,43 @@ tNo *insere (int v, tNo *no) { // recebe a raiz
 //---------------------------------------
 tNo *busca (int c, tNo *no) { // recebe a raiz
 	while ((no != NULL) && (c != no->chave)) {
-		printf("no chave: %d\n", no->chave);
-		if (c < no->chave) {
+		if (c < no->chave) 
 			no = no->esq;
-			printf("foi para esquerda! alegria!\n");
-		}
-		else{
+		else
 			no = no->dir;
-			printf("foi para direita! euforia!\n");
-		}
 	}
 	return no;
 }
 
 
-/*//---------------------------------------
-//	4. Busca
-//---------------------------------------
-tNo *busca (int c, tNo *no) { // recebe a raiz
-	if (no == NULL)
-		return NULL;
-	if (c == no->chave)
-		return no;
-	if (c < no->chave)
-		return busca (c, no->esq);
-	else
-		return busca (c, no->dir);
-}
+
+
 
 //---------------------------------------
 //	5. Remove
 //---------------------------------------
-void remove (tNo *no) {
+tNo *exclui (tNo *no) {
 
 
 }
-*/
+
+
+//---------------------------------------
+//	10. Visita
+//---------------------------------------
+void visita (tNo *no, int h) {
+	printf("%d,%d\n", no->chave, h);
+	return;
+}
+
+//---------------------------------------
+//	11. Impressão em Ordem
+//---------------------------------------
+void imprimeEmOrdem (tNo *no, int h) {
+	if (no != NULL){
+		imprimeEmOrdem (no->esq, h+1);
+		visita (no, h);
+		imprimeEmOrdem (no->dir, h+1);
+	}
+	return;
+}

@@ -19,6 +19,8 @@ tNo *criaNo (int c);
 
 tNo *insere (int v, tNo *no); 
 tNo *busca (int c, tNo *no); 
-/*void remove (tNo *no); 
-*/
+tNo *exclui (tNo *no); 
+void visita (tNo *no, int h);
+void imprimeEmOrdem (tNo *no, int h);
+
 #endif

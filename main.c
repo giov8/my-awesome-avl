@@ -37,10 +37,12 @@ int main () {
 		op = getchar();
 	}
 
-	printf("vc quer raiz? %d\n", raiz->chave);
+	printf("vc quer raiz? %d\n", raiz->chave);// deletar
 
 	no = busca(48, raiz); // deletar
 	printf ("busca retornou: %d \n", no->chave); // DELETAR
+	
+	imprimeEmOrdem (raiz, 0);
 
 	// impressao
 }
