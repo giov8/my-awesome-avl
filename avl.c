@@ -36,7 +36,7 @@ tNo *criaNo (int c) {
 }
 
 //---------------------------------------
-//	3. Insere iterativa com pai
+//	3. Inserção iterativa com pai
 //---------------------------------------
 tNo *insere (int v, tNo *raiz) { // recebe a raiz
 
@@ -94,13 +94,94 @@ tNo *exclui (tNo *no) {
 }
 
 
+//---------------------------------------
+//	8. Altura da árvore 
+//---------------------------------------
+int altura (tNo *no) {
+	int he, hd;
+
+	if (no == NULL)
+		return 0;
+	he = altura (no->esq);
+	hd = altura (no->dir);
+	if (he > hd)
+		return he + 1;
+	else 
+		return hd + 1; 
+}
+
+
+//---------------------------------------
+//	14. Rotação para direita 
+//---------------------------------------
+tNo *rotDir (tNo *no) {
+	tNo *aux;
+	aux = no->esq;
+	no->esq = aux->dir;
+	aux->pai = no->pai;
+	no->pai = aux;
+	aux->dir->pai = no;
+	aux->dir = no;
+	return aux;
+}
+
+//---------------------------------------
+//	15. Rotação para esquerda 
+//---------------------------------------
+tNo *rotEsq(tNo *no) {
+	tNo *aux;
+	aux = no->dir;
+	no->dir = aux->esq;
+	aux->pai = no->pai;
+	no->pai = aux;
+	aux->esq->pai = no;
+	aux->esq = no;
+	return aux;
+}
 
 
 //---------------------------------------
 //	0. Ajusta Árvore AVL
 //---------------------------------------
 void ajustaAVL(tNo *no, *raiz) {
-
+	tno *aux = no;
+	while (aux != NULL) {
+		aux->fb = altura (aux->dir) - altura (aux->esq);
+		if ((aux->fb == -1) || (aux->fb == 0) || (aux->fb == 1))
+			aux = aux->pai;
+		if (aux->fb < -1) {
+			if (aux->esq->esq != NULL) {				// caso esquerda-esquerda
+				rotDir (aux);							// rotaciona o nó para direita
+				aux->fb = altura (aux->dir) - altura (aux->esq);
+				aux = aux->pai;
+			}
+			else {										// caso esquerda-direita
+				aux = aux->esq;
+				rotEsq (aux);							// rotaciona o filho esquerdo para direita
+				aux->fb = altura (aux->dir) - altura (aux->esq);
+				aux = aux->pai;
+				rotDir (aux);							// rotaciona o nó para direita
+				aux->fb = altura (aux->dir) - altura (aux->esq);
+				aux = aux->pai;
+			}
+		}
+		else {
+			if (aux->dir->dir != NULL) {				// caso direita-direita
+				rotEsq (aux);							// rotaciona o nó para esquerda
+				aux->fb = altura (aux->dir) - altura (aux->esq);
+				aux = aux->pai;
+			}
+			else {										// caso direita-esquerda
+				aux = aux->dir;
+				rotDir (aux);							// rotaciona o filho direito para esquerda
+				aux->fb = altura (aux->dir) - altura (aux->esq);
+				aux = aux->pai;
+				rotEsq (aux);							// rotaciona o nó para esquerda
+				aux->fb = altura (aux->dir) - altura (aux->esq);
+				aux = aux->pai;
+			}
+		}
+	}
 }
 
 
@@ -128,58 +209,29 @@ void imprimeEmOrdem (tNo *no, int h) {
 
 
 //---------------------------------------
-//	11. Minimum
+//	12. Mínimo
 //---------------------------------------
-tNode min (tNode *node) {
-	if (node->left == NULL)
-		return node->key;
+tNo min (tNo *no) {
+	if (no->esq == NULL)
+		return no->chave;
 	else
-		return min (node->left);
+		return min (no->esq);
 }
 
 //---------------------------------------
-//	13. Successor
+//	13. Sucessor
 //---------------------------------------
-tNode successor (tNode *node) {
-	if (node->rigth != NULL)
-		return min (node->right);
+tNo sucessor (tNo *no) {
+	if (no->dir != NULL)
+		return min (no->dir);
 	else {
-		tNode *s = node->father;
-		while ((s != NULL) && (node == s->right)) {
-			node = s;
-			s = s->father;
+		tNo *s = no->pai;
+		while ((s != NULL) && (no == s->dir)) {
+			no = s;
+			s = s->pai;
 		}
 	}
 	return s;
-}
-
-
-//---------------------------------------
-//	17. Right rotation
-//---------------------------------------
-tNode *rightRotation (tNode *node) {
-	tNode *aux;
-	aux = node->left;
-	node->left = aux->right;
-	aux->father = node->father;
-	node->father = aux;
-	aux->right->father = node;
-	aux->right = node;
-	return aux;
-}
-
-//---------------------------------------
-//	18. Left rotation
-//---------------------------------------
-tNode *leftRotation (tNode *node) {
-	tNode *aux;
-	aux = node->rigth;
-	node->right = aux->left;
-	aux->father = node->father;
-	node->father = aux;
-	aux->left->father = node;
-	aux->left = node;
-	return aux;
 }
 
 //---------------------------------------

@@ -22,9 +22,9 @@ int main () {
 
 	op = getchar ();					// enter ou barra ene
 
-	while (1) {
+	while (1) {							// looping infinito para tratar entradas seguintes
 		op = getchar ();
-		if (op == EOF) break;
+		if (op == EOF) break;			// sai do looping quando chega ao fim das entradas
 		scanf("%d", &valor);
 		//printf("operação: %c, valor: %d\n", op, valor);
 
