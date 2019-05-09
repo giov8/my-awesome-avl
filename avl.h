@@ -22,6 +22,9 @@ tNo *busca (int c, tNo *no);
 tNo *exclui (tNo *no); 
 void visita (tNo *no, int h);
 void imprimeEmOrdem (tNo *no, int h);
-void ajustaAVL(tNo *no, *raiz);
+void ajustaAVL(tNo *no, tNo *raiz);
+
+tNo *min (tNo *no);
+tNo *sucessor (tNo *no);
 
 #endif

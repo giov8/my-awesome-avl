@@ -36,7 +36,7 @@ tNo *criaNo (int c) {
 }
 
 //---------------------------------------
-//	3. Inserção iterativa com pai
+//	3. Inserção iterativa com ajuste do pai 
 //---------------------------------------
 tNo *insere (int v, tNo *raiz) { // recebe a raiz
 
@@ -90,7 +90,7 @@ void ajustaPai (tNo *no, tNo *novo) {
 //	0. Exclusão
 //---------------------------------------
 tNo *exclui (tNo *no) {
-
+	return NULL;
 }
 
 
@@ -102,8 +102,8 @@ int altura (tNo *no) {
 
 	if (no == NULL)
 		return 0;
-	he = altura (no->esq);
-	hd = altura (no->dir);
+	he = altura(no->esq);
+	hd = altura(no->dir);
 	if (he > hd)
 		return he + 1;
 	else 
@@ -143,7 +143,7 @@ tNo *rotEsq(tNo *no) {
 //---------------------------------------
 //	0. Ajusta Árvore AVL
 //---------------------------------------
-void ajustaAVL(tNo *no, *raiz) {
+/*void ajustaAVL(tNo *no, tNo *raiz) {
 	tno *aux = no;
 	while (aux != NULL) {
 		aux->fb = altura (aux->dir) - altura (aux->esq);
@@ -182,7 +182,7 @@ void ajustaAVL(tNo *no, *raiz) {
 			}
 		}
 	}
-}
+}*/
 
 
 //---------------------------------------
@@ -190,8 +190,8 @@ void ajustaAVL(tNo *no, *raiz) {
 //---------------------------------------
 void visita (tNo *no, int h) {
 	printf("%d,%d\n", no->chave, h);
-	if (no->pai != NULL)
-		printf("o nó pai de %d é %d\n", no->chave, no->pai->chave);
+	//if (no->pai != NULL)
+	//	printf("o nó pai de %d é %d\n", no->chave, no->pai->chave);
 	return;
 }
 
@@ -211,9 +211,10 @@ void imprimeEmOrdem (tNo *no, int h) {
 //---------------------------------------
 //	12. Mínimo
 //---------------------------------------
-tNo min (tNo *no) {
+// FAZER VERSÃO ITERATIVA
+tNo *min (tNo *no) {
 	if (no->esq == NULL)
-		return no->chave;
+		return no;
 	else
 		return min (no->esq);
 }
@@ -221,11 +222,14 @@ tNo min (tNo *no) {
 //---------------------------------------
 //	13. Sucessor
 //---------------------------------------
-tNo sucessor (tNo *no) {
+// RETORNA NULL SE FOR O NUMERO MAIS ALTO! (Segmentation Fault)
+tNo *sucessor (tNo *no) {
+	tNo *s = NULL;
+
 	if (no->dir != NULL)
 		return min (no->dir);
 	else {
-		tNo *s = no->pai;
+		s = no->pai;
 		while ((s != NULL) && (no == s->dir)) {
 			no = s;
 			s = s->pai;
@@ -237,7 +241,7 @@ tNo sucessor (tNo *no) {
 //---------------------------------------
 //	16. Delete
 //---------------------------------------
-void del (tNode *node) {
+/*void del (tNode *node) {
 	if ((node->left == NULL) && (node->rigth == NULL)) {
 		adjustFather (node, NULL);
 		remove (node);									// verificar se eh um free mesmo
@@ -261,3 +265,4 @@ void del (tNode *node) {
 				remove (node);
 			}
 }
+*/

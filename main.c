@@ -14,7 +14,7 @@ int main () {
 
 	int valor = 0;
 	tNo *raiz = inicializaAVL();
-	tNo *no;
+	tNo *no = NULL;
 
 	char op = getchar();
 	scanf("%d", &valor);
@@ -42,6 +42,10 @@ int main () {
 	}
 
 	imprimeEmOrdem (raiz, 0);
+
+	//no = min(raiz); printf("min: %d\n", no->chave);
+
+	no = sucessor(busca(45, raiz)); printf("sucessor: %d\n", no->chave);
 
 	// impressao
 }
