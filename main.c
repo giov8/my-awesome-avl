@@ -45,9 +45,12 @@ int main () {
 
 	//no = min(raiz); printf("min: %d\n", no->chave);
 
-	//no = sucessor(busca(45, raiz)); printf("sucessor: %d\n", no->chave);
+	printf("busca: %d\n", busca(20, raiz));
+	no = rotEsq(busca(20, raiz));
 
-	printf("altura: %d\n", altura(raiz));
+	imprimeEmOrdem (raiz, 0);
+
+	//printf("altura: %d\n", altura(raiz));
 
 	// impressao
 }

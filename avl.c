@@ -118,12 +118,13 @@ int altura (tNo *no) {
 //	14. Rotação para direita 
 //---------------------------------------
 tNo *rotDir (tNo *no) {
-	tNo *aux;
-	aux = no->esq;
+	tNo *aux = no->esq;
 	no->esq = aux->dir;
+
 	aux->pai = no->pai;
 	no->pai = aux;
 	aux->dir->pai = no;
+
 	aux->dir = no;
 	return aux;
 }
@@ -132,12 +133,13 @@ tNo *rotDir (tNo *no) {
 //	15. Rotação para esquerda 
 //---------------------------------------
 tNo *rotEsq(tNo *no) {
-	tNo *aux;
-	aux = no->dir;
+	tNo *aux = no->dir;
 	no->dir = aux->esq;
+
 	aux->pai = no->pai;
 	no->pai = aux;
 	aux->esq->pai = no;
+
 	aux->esq = no;
 	return aux;
 }
