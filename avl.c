@@ -97,13 +97,16 @@ tNo *exclui (tNo *no) {
 //---------------------------------------
 //	8. Altura da árvore 
 //---------------------------------------
+// RETORNA 0 SE ARVORE VAZIA, 1 SE TIVER SO
+// A RAIZ, 2 SE TIVER 2 FILHOS...
+// FAZER ITERATIVO
 int altura (tNo *no) {
-	int he, hd;
-
 	if (no == NULL)
 		return 0;
-	he = altura(no->esq);
-	hd = altura(no->dir);
+
+	int he = altura(no->esq);
+	int hd = altura(no->dir);
+
 	if (he > hd)
 		return he + 1;
 	else 

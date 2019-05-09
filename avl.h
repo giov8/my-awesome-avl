@@ -26,5 +26,6 @@ void ajustaAVL(tNo *no, tNo *raiz);
 
 tNo *min (tNo *no);
 tNo *sucessor (tNo *no);
+int altura (tNo *no);
 
 #endif

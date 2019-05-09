@@ -30,7 +30,7 @@ int main () {
 
 		if (op == 'i') {
 			no = insere(valor, raiz);
-			//ajustaAVL(no, raiz);
+			//ajustaAVL(no, raiz);			// COLOCAR DENTRO DO INSERE PARA MELHORAR O CODIGO!
 		}
 
 /*		if (op == 'r')
@@ -45,7 +45,9 @@ int main () {
 
 	//no = min(raiz); printf("min: %d\n", no->chave);
 
-	no = sucessor(busca(45, raiz)); printf("sucessor: %d\n", no->chave);
+	//no = sucessor(busca(45, raiz)); printf("sucessor: %d\n", no->chave);
+
+	printf("altura: %d\n", altura(raiz));
 
 	// impressao
 }
