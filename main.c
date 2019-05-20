@@ -29,8 +29,7 @@ int main () {
 		//printf("operação: %c, valor: %d\n", op, valor);
 
 		if (op == 'i') {
-			no = insere(valor, raiz);
-			//ajustaAVL(no, raiz);			// COLOCAR DENTRO DO INSERE PARA MELHORAR O CODIGO!
+			insere(valor, raiz);
 		}
 
 /*		if (op == 'r')

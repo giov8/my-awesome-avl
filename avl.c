@@ -15,7 +15,8 @@
 //	DESCRIÇÃO: inicializa a árvore AVL 
 //	vazia
 //---------------------------------------
-tNo *inicializaAVL (void) {
+tNo *inicializaAVL (void)
+{
 	return NULL;
 }
 
@@ -25,7 +26,8 @@ tNo *inicializaAVL (void) {
 //	com ponteiro pai para NULL e fator de
 //	balanceamento 0
 //---------------------------------------
-tNo *criaNo (int c) {
+tNo *criaNo (int c)
+{
 	tNo *no = malloc (sizeof (tNo));
 	no->chave = c;
 	no->dir = NULL;
@@ -38,7 +40,8 @@ tNo *criaNo (int c) {
 //---------------------------------------
 //	3. Inserção iterativa com ajuste do pai 
 //---------------------------------------
-tNo *insere (int v, tNo *raiz) { // recebe a raiz
+void insere (int v, tNo *raiz)
+{ // recebe a raiz
 
 	tNo *no, *pai;
 	if (raiz == NULL) 
@@ -57,13 +60,17 @@ tNo *insere (int v, tNo *raiz) { // recebe a raiz
 	else
 		pai->dir = no;
 	no->pai = pai;				// o ponteiro pai é ajustado
-	return no;
+
+	ajustaAVL(no); 				// passa o nó p/ ajustar ? 
+
+	//return no;
 }
 
 //---------------------------------------
 //	4. Busca iterativa
 //---------------------------------------
-tNo *busca (int c, tNo *no) { // recebe a raiz
+tNo *busca (int c, tNo *no)
+{ // recebe a raiz
 	while ((no != NULL) && (c != no->chave)) {
 		if (c < no->chave) 
 			no = no->esq;
@@ -76,7 +83,8 @@ tNo *busca (int c, tNo *no) { // recebe a raiz
 //---------------------------------------
 //	5. Ajusta pai
 //---------------------------------------
-void ajustaPai (tNo *no, tNo *novo) {
+void ajustaPai (tNo *no, tNo *novo)
+{
 	if (no->pai->esq == no)
 		no->pai->dir = novo;
 	else
@@ -89,7 +97,8 @@ void ajustaPai (tNo *no, tNo *novo) {
 //---------------------------------------
 //	0. Exclusão
 //---------------------------------------
-tNo *exclui (tNo *no) {
+tNo *exclui (tNo *no)
+{
 	return NULL;
 }
 
@@ -100,7 +109,8 @@ tNo *exclui (tNo *no) {
 // RETORNA 0 SE ARVORE VAZIA, 1 SE TIVER SO
 // A RAIZ, 2 SE TIVER 2 FILHOS...
 // FAZER ITERATIVO
-int altura (tNo *no) {
+int altura (tNo *no)
+{
 	if (no == NULL)
 		return 0;
 
@@ -117,7 +127,8 @@ int altura (tNo *no) {
 //---------------------------------------
 //	14. Rotação para direita 
 //---------------------------------------
-tNo *rotDir (tNo *no) {
+tNo *rotDir (tNo *no)
+{
 	tNo *aux = no->esq;
 	no->esq = aux->dir;
 
@@ -132,7 +143,8 @@ tNo *rotDir (tNo *no) {
 //---------------------------------------
 //	15. Rotação para esquerda 
 //---------------------------------------
-tNo *rotEsq(tNo *no) {
+tNo *rotEsq(tNo *no)
+{
 	tNo *aux = no->dir;
 	no->dir = aux->esq;
 
@@ -144,9 +156,52 @@ tNo *rotEsq(tNo *no) {
 	return aux;
 }
 
+//---------------------------------------
+//	0. Ajusta Árvore AVL // GIOVANI (pos ordem... ou não?)
+//---------------------------------------
+void ajustaAVL(tNo *no, tNo *raiz)
+{									// fazer versao iterativa ? fica o questionamento!
+	ajustaAVL()
+
+}
+
+//-----------------------------------------
+//	0. Ajusta Árvore AVL: esquerda-esquerda
+//-----------------------------------------
+void ajustaEsqEsq ()
+{
+	//rotDir();
+	//ajuste do que?
+}
+
+//-----------------------------------------
+//	0. Ajusta Árvore AVL: direita-direita
+//-----------------------------------------
+void ajustaDirDir ()
+{
+	//rotEsq();
+}
+
+//-----------------------------------------
+//	0. Ajusta Árvore AVL: esquerda-direita
+//-----------------------------------------
+void ajustaEsqDir ()
+{
+	//rotEsq();
+	//ajustaEsqEsq();
+}
+
+//-----------------------------------------
+//	0. Ajusta Árvore AVL: direita-esquerda
+//-----------------------------------------
+void ajustaDirEsq ()
+{
+	//rotDir();
+	//ajustaDirDir();
+}
 
 //---------------------------------------
-//	0. Ajusta Árvore AVL
+//	0. Ajusta Árvore AVL // MARISA
 //---------------------------------------
 /*void ajustaAVL(tNo *no, tNo *raiz) {
 	tno *aux = no;
@@ -174,7 +229,8 @@ tNo *rotEsq(tNo *no) {
 			if (aux->dir->dir != NULL) {				// caso direita-direita
 				rotEsq (aux);							// rotaciona o nó para esquerda
 				aux->fb = altura (aux->dir) - altura (aux->esq);
-				aux = aux->pai;
+			{
+	aux = aux->pai;
 			}
 			else {										// caso direita-esquerda
 				aux = aux->dir;
