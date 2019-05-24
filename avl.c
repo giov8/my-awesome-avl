@@ -40,28 +40,71 @@ tNo *criaNo (int c)
 //---------------------------------------
 //	3. Inserção iterativa com ajuste do pai OK
 //---------------------------------------
-void insere (int v, tNo *raiz)
-{ // recebe a raiz
-	tNo *no, *pai;
-	if (raiz == NULL) 
-		return criaNo (v);
-	no = raiz;
-	while (no != NULL){
-		pai = no;
-		if (v < no->chave)
-			no = no->esq;
-		else
-			no = no->dir;
-	}
-	no = criaNo(v);
-	if (v < pai->chave)
-		pai->esq = no;
-	else
-		pai->dir = no;
-	no->pai = pai;				// o ponteiro pai é ajustado
+/*void insere (int v, tNo *raiz)
+{
+	if (raiz == NULL) 			// se receber parâmetro nulo
+		raiz = criaNo(v);
 
-	ajustaAVL(no); 				// passa o nó p/ ajustar ? 	
+	else {
+		tNo *no, *pai;
+		no = raiz;
+
+		while (no != NULL) {
+			pai = no;
+			if (v < no->chave)
+				no = no->esq;
+			else
+				no = no->dir;
+		}
+		no = criaNo(v);
+		if (v < pai->chave)
+			pai->esq = no;
+		else
+			pai->dir = no;
+		no->pai = pai;				// o ponteiro pai é ajustado
+		ajustaAVL(no); 				// passa o nó p/ ajustar ? 
+	}
+}*/
+
+tNo *insere (int v, tNo *raiz) { // recebe a raiz	
+	tNo *no, *pai;
+
+	if (raiz == NULL) 
+
+		return criaNo (v);
+
+	no = raiz;
+
+	while (no != NULL){
+
+		pai = no;
+
+		if (v < no->chave)
+
+			no = no->esq;
+
+		else
+
+			no = no->dir;
+
+	}
+
+	no = criaNo(v);
+
+	if (v < pai->chave)
+
+		pai->esq = no;
+
+	else
+
+		pai->dir = no;
+
+	no->pai = pai;
+
+	return no;
+
 }
+
 
 //---------------------------------------
 //	4. Busca iterativa OK
@@ -128,6 +171,12 @@ tNo *rotDir (tNo *no)
 {
 	tNo *aux = no->esq;
 	no->esq = aux->dir;
+	if (no->pai != NULL) {
+		if (no->pai->esq == no)
+			no->pai->esq = aux;
+		else
+			no->pai->dir = aux;
+	}
 	if (aux->dir != NULL)	// apenas se o no aux tiver filho direito
 		aux->dir->pai = no;
 	aux->dir = no;
@@ -143,14 +192,18 @@ tNo *rotEsq(tNo *no)
 {
 	tNo *aux = no->dir;
 	no->dir = aux->esq;
+	if (no->pai != NULL) {
+		if (no->pai->esq == no)
+			no->pai->esq = aux;
+		else
+			no->pai->dir = aux;
+	}
 	if (aux->esq != NULL)	// apenas se o no aux tiver filho esquerdo
 		aux->esq->pai = no;
 	aux->esq = no;
 	aux->pai = no->pai;
 	no->pai = aux;
 
-	
-	
 	return aux;
 }
 
@@ -165,27 +218,31 @@ int calculaFB(tNo *no)
 //---------------------------------------
 //	0. Ajusta Árvore AVL // GIOVANI (pos ordem... ou não?)
 //---------------------------------------
-void ajustaAVL(tNo *no)
-{									// fazer versao iterativa ? fica o questionamento!
+tNo *ajustaAVL(tNo *no)
+{											// fazer versao iterativa ? fica o questionamento!
+	tNo *raiz = no;
 	tNo *aux = no;
 	while (aux != NULL) {
 		aux->fb = calculaFB(aux);
-		// if ((aux->fb >= -1) && (aux->fb <= 1))
-		// 	aux = aux->pai;
-
+		printf("***********************************\n");
+		printf("no: %d fator: %d\n", aux->chave, aux->fb);
 		if (aux->fb < -1) {
-			if (aux->esq->esq != NULL)// se tiver um filho esquerdo eh caso esq-esq
+			if (aux->esq->esq != NULL)		// se tiver um filho esquerdo eh caso esq-esq
 				ajustaEsqEsq(aux);
-			else {// se tiver um filho direito eh caso esq-dir
+			else 							// se tiver um filho direito eh caso esq-dir
 				ajustaEsqDir(aux);
-
-			}
-
-		if (aux->fb >)	
-
+		}
+		if (aux->fb > 1) {
+			if (aux->dir->dir != NULL) 
+				ajustaDirDir(aux);
+			else
+				ajustaDirEsq(aux);
+		}
+		raiz = aux;
 		aux = aux->pai;
 	}
 
+	return raiz;
 }
 
 //-----------------------------------------
@@ -193,16 +250,29 @@ void ajustaAVL(tNo *no)
 //-----------------------------------------
 void ajustaEsqEsq (tNo *no)
 {
-	no = rotDir (no);							// rotaciona o nó para direita
-	no->fb = calculaFB(no);                                                                                                                                                                                               
+	printf("ajustaEsqEsq\n");
+	printf("no a ser rotacionado? %d\n", no->chave);
+	no = rotDir (no);
+	printf("no esq esq: %d\n", no->chave);						// rotaciona o nó para direita
+	printf("pai %d\n", no->pai->chave);
+	no->fb = calculaFB(no);
+
+	printf("nao deu merda acima\n");
+	no->dir->fb = calculaFB(no->dir);
+	printf("ainda nao deu merda\n");                                                                                                                                                                                           
 }
 
 //-----------------------------------------
 //	0. Ajusta Árvore AVL: direita-direita
 //-----------------------------------------
-void ajustaDirDir ()
+void ajustaDirDir (tNo *no)
 {
-	//rotEsq();
+	printf("ajustaDirDir\n");
+	printf("no a ser rotacionado? %d\n", no->chave);
+	no = rotEsq(no);
+	printf("no dir dir: %d\n", no->chave);
+	no->fb = calculaFB(no);
+	no->esq->fb = calculaFB(no->esq);
 }
 
 //-----------------------------------------
@@ -210,71 +280,34 @@ void ajustaDirDir ()
 //-----------------------------------------
 void ajustaEsqDir (tNo *no)
 {
+	printf("ajustaEsqDir\n" );
+	printf("no a ser rotacionado? %d\n", no->esq->chave);
 	no = rotEsq (no->esq);
-	no->fb = calculaFB(no); 
+	printf("no esq dir: %d\n", no->chave);
+	no->fb = calculaFB(no);
+	no->esq->fb = calculaFB(no->esq);
 	ajustaEsqEsq (no->pai);
 }
 
 //-----------------------------------------
 //	0. Ajusta Árvore AVL: direita-esquerda
 //-----------------------------------------
-void ajustaDirEsq ()
+void ajustaDirEsq (tNo *no)
 {
-	//rotDir();
-	//ajustaDirDir();
+	printf("ajustaDirEsq\n");
+	no = rotDir (no->dir);
+	no->fb = calculaFB(no);
+	no->dir->fb = calculaFB(no->dir);
+	ajustaDirDir (no->pai);
 }
-
-//---------------------------------------
-//	0. Ajusta Árvore AVL // MARISA
-//---------------------------------------
-/*void ajustaAVL(tNo *no, tNo *raiz) {
-	tno *aux = no;
-	while (aux != NULL) {
-		aux->fb = altura (aux->dir) - altura (aux->esq);
-		if ((aux->fb == -1) || (aux->fb == 0) || (aux->fb == 1))
-			aux = aux->pai;
-		if (aux->fb < -1) {
-			if (aux->esq->esq != NULL) {				// caso esquerda-esquerda
-				rotDir (aux);							// rotaciona o nó para direita
-				aux->fb = altura (aux->dir) - altura (aux->esq);
-				aux = aux->pai;
-			}
-			else {										// caso esquerda-direita
-				aux = aux->esq;
-				rotEsq (aux);							// rotaciona o filho esquerdo para direita
-				aux->fb = altura (aux->dir) - altura (aux->esq);
-				aux = aux->pai;
-				rotDir (aux);							// rotaciona o nó para direita
-				aux->fb = altura (aux->dir) - altura (aux->esq);
-				aux = aux->pai;
-			}
-		}
-		else {
-			if (aux->dir->dir != NULL) {				// caso direita-direita
-				rotEsq (aux);							// rotaciona o nó para esquerda
-				aux->fb = altura (aux->dir) - altura (aux->esq);
-			{
-	aux = aux->pai;
-			}
-			else {										// caso direita-esquerda
-				aux = aux->dir;
-				rotDir (aux);							// rotaciona o filho direito para esquerda
-				aux->fb = altura (aux->dir) - altura (aux->esq);
-				aux = aux->pai;
-				rotEsq (aux);							// rotaciona o nó para esquerda
-				aux->fb = altura (aux->dir) - altura (aux->esq);
-				aux = aux->pai;
-			}
-		}
-	}
-}*/
 
 
 //---------------------------------------
 //	10. Visita OK
 //---------------------------------------
 void visita (tNo *no, int h) {
-	printf("%d,%d\n", no->chave, h);
+	printf("%d,%d fb: %d\n", no->chave, h, no->fb);
+
 	//if (no->pai != NULL)
 	//	printf("o nó pai de %d é %d\n", no->chave, no->pai->chave);
 	return;
@@ -298,7 +331,8 @@ void imprimeEmOrdem (tNo *no, int h)
 //	12. Mínimo OK
 //---------------------------------------
 // FAZER VERSÃO ITERATIVA
-tNo *min (tNo *no) {
+tNo *min (tNo *no)
+{
 	if (no->esq == NULL)
 		return no;
 	else
@@ -310,7 +344,8 @@ tNo *min (tNo *no) {
 //---------------------------------------
 // RETORNA NULL SE FOR O NUMERO MAIS ALTO! (Segmentation Fault)
 // IMPORTANTE PARA A EXCLUSÂO ESSA INFORMAÇÂO
-tNo *sucessor (tNo *no) {
+tNo *sucessor (tNo *no)
+{
 	tNo *s = NULL;
 
 	if (no->dir != NULL)

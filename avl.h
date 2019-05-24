@@ -20,7 +20,7 @@ tNo *criaNo (int c);
 tNo *insere (int v, tNo *raiz);
 tNo *exclui (tNo *no);
 int calculaFB(tNo *no);
-void ajustaAVL(tNo *no);
+tNo *ajustaAVL(tNo *no);
 
 tNo *busca (int c, tNo *no); 
 void visita (tNo *no, int h);
@@ -31,5 +31,10 @@ tNo *sucessor (tNo *no);
 int altura (tNo *no);
 tNo *rotDir (tNo *no);
 tNo *rotEsq(tNo *no);
+
+void ajustaEsqEsq (tNo *no);
+void ajustaDirDir (tNo *no);
+void ajustaEsqDir (tNo *no);
+void ajustaDirEsq (tNo *no);
 
 #endif

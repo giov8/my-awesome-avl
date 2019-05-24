@@ -20,37 +20,30 @@ int main () {
 	scanf("%d", &valor);
 	raiz = insere(valor, raiz);
 
+	imprimeEmOrdem(raiz, 0);
+
 	op = getchar ();					// enter ou barra ene
 
 	while (1) {							// looping infinito para tratar entradas seguintes
+		printf("====================================================\n");
 		op = getchar ();
 		if (op == EOF) break;			// sai do looping quando chega ao fim das entradas
 		scanf("%d", &valor);
 		//printf("operação: %c, valor: %d\n", op, valor);
 
 		if (op == 'i') {
-			insere(valor, raiz);
-
+			no = insere(valor, raiz);
+			imprimeEmOrdem(raiz, 0);
+			raiz = ajustaAVL(no);
 		}
+		printf("====================================================\n");
+		imprimeEmOrdem(raiz, 0);
 
 /*		if (op == 'r')
 			no = busca(valor, raiz);
 			remove(no);
 */
-
 		op = getchar(); 						// Recebe o "Enter" ou '\n'
 	}
-
-	imprimeEmOrdem (raiz, 0);
-
-	//no = min(raiz); printf("min: %d\n", no->chave);
-
-	printf("busca: %d\n", busca(20, raiz));
-	no = rotEsq(busca(20, raiz));
-
-	imprimeEmOrdem (raiz, 0);
-
-	//printf("altura: %d\n", altura(raiz));
-
-	// impressao
+	imprimeEmOrdem(raiz, 0);
 }

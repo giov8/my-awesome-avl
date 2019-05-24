@@ -1,5 +1,5 @@
 myavl:	main.o avl.o
-	gcc main.o avl.o -o myavl -Wall
+	gcc -g main.o avl.o -o myavl -Wall
 
 main.o:	main.c
 	gcc -c main.c -Wall
