@@ -19,7 +19,8 @@ tNo *criaNo (int c);
 
 tNo *insere (int v, tNo *raiz);
 tNo *exclui (tNo *no);
-void ajustaAVL(tNo *no, tNo *raiz);
+int calculaFB(tNo *no);
+void ajustaAVL(tNo *no);
 
 tNo *busca (int c, tNo *no); 
 void visita (tNo *no, int h);

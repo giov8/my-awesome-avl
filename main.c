@@ -30,6 +30,7 @@ int main () {
 
 		if (op == 'i') {
 			insere(valor, raiz);
+
 		}
 
 /*		if (op == 'r')

@@ -11,7 +11,7 @@
 #include "avl.h"
 
 //---------------------------------------
-//	1. Inicialização
+//	1. Inicialização OK
 //	DESCRIÇÃO: inicializa a árvore AVL 
 //	vazia
 //---------------------------------------
@@ -21,7 +21,7 @@ tNo *inicializaAVL (void)
 }
 
 //---------------------------------------
-//	2. Cria nó
+//	2. Cria nó OK
 //	DESCRIÇÃO: aloca memória para novo nó,
 //	com ponteiro pai para NULL e fator de
 //	balanceamento 0
@@ -38,11 +38,10 @@ tNo *criaNo (int c)
 }
 
 //---------------------------------------
-//	3. Inserção iterativa com ajuste do pai 
+//	3. Inserção iterativa com ajuste do pai OK
 //---------------------------------------
 void insere (int v, tNo *raiz)
 { // recebe a raiz
-
 	tNo *no, *pai;
 	if (raiz == NULL) 
 		return criaNo (v);
@@ -61,13 +60,11 @@ void insere (int v, tNo *raiz)
 		pai->dir = no;
 	no->pai = pai;				// o ponteiro pai é ajustado
 
-	ajustaAVL(no); 				// passa o nó p/ ajustar ? 
-
-	//return no;
+	ajustaAVL(no); 				// passa o nó p/ ajustar ? 	
 }
 
 //---------------------------------------
-//	4. Busca iterativa
+//	4. Busca iterativa OK
 //---------------------------------------
 tNo *busca (int c, tNo *no)
 { // recebe a raiz
@@ -81,7 +78,7 @@ tNo *busca (int c, tNo *no)
 }
 
 //---------------------------------------
-//	5. Ajusta pai
+//	5. Ajusta pai 
 //---------------------------------------
 void ajustaPai (tNo *no, tNo *novo)
 {
@@ -104,7 +101,7 @@ tNo *exclui (tNo *no)
 
 
 //---------------------------------------
-//	8. Altura da árvore 
+//	8. Altura da árvore OK
 //---------------------------------------
 // RETORNA 0 SE ARVORE VAZIA, 1 SE TIVER SO
 // A RAIZ, 2 SE TIVER 2 FILHOS...
@@ -131,12 +128,11 @@ tNo *rotDir (tNo *no)
 {
 	tNo *aux = no->esq;
 	no->esq = aux->dir;
-
+	if (aux->dir != NULL)	// apenas se o no aux tiver filho direito
+		aux->dir->pai = no;
+	aux->dir = no;
 	aux->pai = no->pai;
 	no->pai = aux;
-	aux->dir->pai = no;
-
-	aux->dir = no;
 	return aux;
 }
 
@@ -147,31 +143,58 @@ tNo *rotEsq(tNo *no)
 {
 	tNo *aux = no->dir;
 	no->dir = aux->esq;
-
+	if (aux->esq != NULL)	// apenas se o no aux tiver filho esquerdo
+		aux->esq->pai = no;
+	aux->esq = no;
 	aux->pai = no->pai;
 	no->pai = aux;
-	aux->esq->pai = no;
 
-	aux->esq = no;
+	
+	
 	return aux;
+}
+
+//---------------------------------------
+//	0. Calcula fator de balanceamento
+//---------------------------------------
+int calculaFB(tNo *no)
+{
+	return altura(no->dir) - altura(no->esq);
 }
 
 //---------------------------------------
 //	0. Ajusta Árvore AVL // GIOVANI (pos ordem... ou não?)
 //---------------------------------------
-void ajustaAVL(tNo *no, tNo *raiz)
+void ajustaAVL(tNo *no)
 {									// fazer versao iterativa ? fica o questionamento!
-	ajustaAVL()
+	tNo *aux = no;
+	while (aux != NULL) {
+		aux->fb = calculaFB(aux);
+		// if ((aux->fb >= -1) && (aux->fb <= 1))
+		// 	aux = aux->pai;
+
+		if (aux->fb < -1) {
+			if (aux->esq->esq != NULL)// se tiver um filho esquerdo eh caso esq-esq
+				ajustaEsqEsq(aux);
+			else {// se tiver um filho direito eh caso esq-dir
+				ajustaEsqDir(aux);
+
+			}
+
+		if (aux->fb >)	
+
+		aux = aux->pai;
+	}
 
 }
 
 //-----------------------------------------
 //	0. Ajusta Árvore AVL: esquerda-esquerda
 //-----------------------------------------
-void ajustaEsqEsq ()
+void ajustaEsqEsq (tNo *no)
 {
-	//rotDir();
-	//ajuste do que?
+	no = rotDir (no);							// rotaciona o nó para direita
+	no->fb = calculaFB(no);                                                                                                                                                                                               
 }
 
 //-----------------------------------------
@@ -185,10 +208,11 @@ void ajustaDirDir ()
 //-----------------------------------------
 //	0. Ajusta Árvore AVL: esquerda-direita
 //-----------------------------------------
-void ajustaEsqDir ()
+void ajustaEsqDir (tNo *no)
 {
-	//rotEsq();
-	//ajustaEsqEsq();
+	no = rotEsq (no->esq);
+	no->fb = calculaFB(no); 
+	ajustaEsqEsq (no->pai);
 }
 
 //-----------------------------------------
@@ -247,7 +271,7 @@ void ajustaDirEsq ()
 
 
 //---------------------------------------
-//	10. Visita
+//	10. Visita OK
 //---------------------------------------
 void visita (tNo *no, int h) {
 	printf("%d,%d\n", no->chave, h);
@@ -257,10 +281,11 @@ void visita (tNo *no, int h) {
 }
 
 //---------------------------------------
-//	11. Impressão em Ordem
+//	11. Impressão em Ordem OK
 //---------------------------------------
-void imprimeEmOrdem (tNo *no, int h) {
-	if (no != NULL){
+void imprimeEmOrdem (tNo *no, int h)
+{
+	if (no != NULL) {
 		imprimeEmOrdem (no->esq, h+1);
 		visita (no, h);
 		imprimeEmOrdem (no->dir, h+1);
@@ -270,7 +295,7 @@ void imprimeEmOrdem (tNo *no, int h) {
 
 
 //---------------------------------------
-//	12. Mínimo
+//	12. Mínimo OK
 //---------------------------------------
 // FAZER VERSÃO ITERATIVA
 tNo *min (tNo *no) {
@@ -281,9 +306,10 @@ tNo *min (tNo *no) {
 }
 
 //---------------------------------------
-//	13. Sucessor
+//	13. Sucessor 
 //---------------------------------------
 // RETORNA NULL SE FOR O NUMERO MAIS ALTO! (Segmentation Fault)
+// IMPORTANTE PARA A EXCLUSÂO ESSA INFORMAÇÂO
 tNo *sucessor (tNo *no) {
 	tNo *s = NULL;
 
