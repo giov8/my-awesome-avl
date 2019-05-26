@@ -11,13 +11,15 @@
 #include "avl.h"
 
 //---------------------------------------
-//	1. Inicialização OK
-//	DESCRIÇÃO: inicializa a árvore AVL 
-//	vazia
+//	FUNÇÕES PARA INICIALIZAÇÃO/ INSERÇÃO
 //---------------------------------------
-tNo *inicializaAVL (void)
+
+//---------------------------------------
+//	1. Inicialização OK
+//---------------------------------------
+tNo *inicializaAVL(void)
 {
-	return NULL;
+	return NULL;						//inicializa a AVL vazia
 }
 
 //---------------------------------------
@@ -26,148 +28,76 @@ tNo *inicializaAVL (void)
 //	com ponteiro pai para NULL e fator de
 //	balanceamento 0
 //---------------------------------------
-tNo *criaNo (int c)
+tNo *criaNo(int c)				
 {
-	tNo *no = malloc (sizeof (tNo));
+	tNo *no = malloc(sizeof (tNo)); 	//aloca memória para novo nó
 	no->chave = c;
 	no->dir = NULL;
 	no->esq = NULL;
-	no->pai = NULL;
-	no->fb = 0; 
+	no->pai = NULL;						//ponteiro pai para NULL, pois é raiz
+	no->fb = 0; 						//fator de balanceamento 0
 	return no;
 }
 
 //---------------------------------------
 //	3. Inserção iterativa com ajuste do pai OK
 //---------------------------------------
-/*void insere (int v, tNo *raiz)
-{
-	if (raiz == NULL) 			// se receber parâmetro nulo
-		raiz = criaNo(v);
-
-	else {
-		tNo *no, *pai;
-		no = raiz;
-
-		while (no != NULL) {
-			pai = no;
-			if (v < no->chave)
-				no = no->esq;
-			else
-				no = no->dir;
-		}
-		no = criaNo(v);
-		if (v < pai->chave)
-			pai->esq = no;
-		else
-			pai->dir = no;
-		no->pai = pai;				// o ponteiro pai é ajustado
-		ajustaAVL(no); 				// passa o nó p/ ajustar ? 
-	}
-}*/
-
-tNo *insere (int v, tNo *raiz) { // recebe a raiz	
+tNo *insere(int v, tNo *raiz)  			// recebe a raiz	
+{	
 	tNo *no, *pai;
-
-	if (raiz == NULL) 
-
-		return criaNo (v);
-
+	if (raiz == NULL) 					// se a raiz for nula
+		return criaNo(v);				// cria o primeiro nó na raiz
 	no = raiz;
-
-	while (no != NULL){
-
+	while (no != NULL) {				// caso contrário, percorre a AVL para inserir na folha
 		pai = no;
-
 		if (v < no->chave)
-
 			no = no->esq;
-
 		else
-
 			no = no->dir;
-
 	}
-
-	no = criaNo(v);
-
+	no = criaNo(v);						// cria o nó na folha e, na sequência, ajusta os ponteiros
 	if (v < pai->chave)
-
 		pai->esq = no;
-
 	else
-
 		pai->dir = no;
-
 	no->pai = pai;
-
-	return no;
-
-}
-
-
-//---------------------------------------
-//	4. Busca iterativa OK
-//---------------------------------------
-tNo *busca (int c, tNo *no)
-{ // recebe a raiz
-	while ((no != NULL) && (c != no->chave)) {
-		if (c < no->chave) 
-			no = no->esq;
-		else
-			no = no->dir;
-	}
 	return no;
 }
 
 //---------------------------------------
-//	5. Ajusta pai 
+//	FUNÇÕES PARA AJUSTE AVL
 //---------------------------------------
-void ajustaPai (tNo *no, tNo *novo)
-{
-	if (no->pai->esq == no)
-		no->pai->dir = novo;
-	else
-		no->pai->dir = novo;
-	if (novo != NULL)
-		novo->pai = no->pai;
-	return;
-}
 
 //---------------------------------------
-//	0. Exclusão
-//---------------------------------------
-tNo *exclui (tNo *no)
-{
-	return NULL;
-}
-
-
-//---------------------------------------
-//	8. Altura da árvore OK
+//	4. Altura da árvore OK
 //---------------------------------------
 // RETORNA 0 SE ARVORE VAZIA, 1 SE TIVER SO
 // A RAIZ, 2 SE TIVER 2 FILHOS...
 // FAZER ITERATIVO
-int altura (tNo *no)
+int altura(tNo *no)
 {
 	if (no == NULL)
-		return 0;
-
+		return 0;					// retorna 0 se a árvore estiver vazia
 	int he = altura(no->esq);
 	int hd = altura(no->dir);
-
 	if (he > hd)
 		return he + 1;
 	else 
 		return hd + 1; 
 }
 
+//---------------------------------------
+//	5. Calcula fator de balanceamento
+//---------------------------------------
+int calculaFB(tNo *no)
+{
+	return altura(no->dir) - altura(no->esq);
+}
 
 //---------------------------------------
-//	14. Rotação para direita 
+//	6. Rotação para direita 
 //---------------------------------------
-tNo *rotDir (tNo *no)
+tNo *rotDir(tNo *no)
 {
 	tNo *aux = no->esq;
 	no->esq = aux->dir;
@@ -186,7 +116,7 @@ tNo *rotDir (tNo *no)
 }
 
 //---------------------------------------
-//	15. Rotação para esquerda 
+//	7. Rotação para esquerda 
 //---------------------------------------
 tNo *rotEsq(tNo *no)
 {
@@ -207,52 +137,14 @@ tNo *rotEsq(tNo *no)
 	return aux;
 }
 
-//---------------------------------------
-//	0. Calcula fator de balanceamento
-//---------------------------------------
-int calculaFB(tNo *no)
-{
-	return altura(no->dir) - altura(no->esq);
-}
-
-//---------------------------------------
-//	0. Ajusta Árvore AVL // GIOVANI (pos ordem... ou não?)
-//---------------------------------------
-tNo *ajustaAVL(tNo *no)
-{											// fazer versao iterativa ? fica o questionamento!
-	tNo *raiz = no;
-	tNo *aux = no;
-	while (aux != NULL) {
-		aux->fb = calculaFB(aux);
-		printf("***********************************\n");
-		printf("no: %d fator: %d\n", aux->chave, aux->fb);
-		if (aux->fb < -1) {
-			if (aux->esq->esq != NULL)		// se tiver um filho esquerdo eh caso esq-esq
-				ajustaEsqEsq(aux);
-			else 							// se tiver um filho direito eh caso esq-dir
-				ajustaEsqDir(aux);
-		}
-		if (aux->fb > 1) {
-			if (aux->dir->dir != NULL) 
-				ajustaDirDir(aux);
-			else
-				ajustaDirEsq(aux);
-		}
-		raiz = aux;
-		aux = aux->pai;
-	}
-
-	return raiz;
-}
-
 //-----------------------------------------
-//	0. Ajusta Árvore AVL: esquerda-esquerda
+//	8. Ajusta Árvore AVL: esquerda-esquerda
 //-----------------------------------------
-void ajustaEsqEsq (tNo *no)
+void ajustaEsqEsq(tNo *no)
 {
 	printf("ajustaEsqEsq\n");
 	printf("no a ser rotacionado? %d\n", no->chave);
-	no = rotDir (no);
+	no = rotDir(no);
 	printf("no esq esq: %d\n", no->chave);						// rotaciona o nó para direita
 	printf("pai %d\n", no->pai->chave);
 	no->fb = calculaFB(no);
@@ -263,9 +155,9 @@ void ajustaEsqEsq (tNo *no)
 }
 
 //-----------------------------------------
-//	0. Ajusta Árvore AVL: direita-direita
+//	9. Ajusta Árvore AVL: direita-direita
 //-----------------------------------------
-void ajustaDirDir (tNo *no)
+void ajustaDirDir(tNo *no)
 {
 	printf("ajustaDirDir\n");
 	printf("no a ser rotacionado? %d\n", no->chave);
@@ -276,9 +168,9 @@ void ajustaDirDir (tNo *no)
 }
 
 //-----------------------------------------
-//	0. Ajusta Árvore AVL: esquerda-direita
+//	10. Ajusta Árvore AVL: esquerda-direita
 //-----------------------------------------
-void ajustaEsqDir (tNo *no)
+void ajustaEsqDir(tNo *no)
 {
 	printf("ajustaEsqDir\n" );
 	printf("no a ser rotacionado? %d\n", no->esq->chave);
@@ -290,66 +182,108 @@ void ajustaEsqDir (tNo *no)
 }
 
 //-----------------------------------------
-//	0. Ajusta Árvore AVL: direita-esquerda
+//	11. Ajusta Árvore AVL: direita-esquerda
 //-----------------------------------------
-void ajustaDirEsq (tNo *no)
+void ajustaDirEsq(tNo *no)
 {
 	printf("ajustaDirEsq\n");
-	no = rotDir (no->dir);
+	no = rotDir(no->dir);
 	no->fb = calculaFB(no);
 	no->dir->fb = calculaFB(no->dir);
-	ajustaDirDir (no->pai);
-}
-
-
-//---------------------------------------
-//	10. Visita OK
-//---------------------------------------
-void visita (tNo *no, int h) {
-	printf("%d,%d fb: %d\n", no->chave, h, no->fb);
-
-	//if (no->pai != NULL)
-	//	printf("o nó pai de %d é %d\n", no->chave, no->pai->chave);
-	return;
+	ajustaDirDir(no->pai);
 }
 
 //---------------------------------------
-//	11. Impressão em Ordem OK
+//	12. Ajusta Árvore AVL 
 //---------------------------------------
-void imprimeEmOrdem (tNo *no, int h)
-{
-	if (no != NULL) {
-		imprimeEmOrdem (no->esq, h+1);
-		visita (no, h);
-		imprimeEmOrdem (no->dir, h+1);
+tNo *ajustaAVL(tNo *no)
+{											// fazer versao iterativa ? fica o questionamento!
+	tNo *raiz = no;
+	tNo *aux = no;
+	while (aux != NULL) {					// vai percorrer a árvore do nó passado até a raiz
+		aux->fb = calculaFB(aux);
+		printf("***********************************\n");
+		printf("no: %d fator: %d\n", aux->chave, aux->fb);
+		if (aux->fb < -1) {
+			if (aux->esq->esq != NULL)		// se tiver um filho esquerdo, é caso esq-esq
+				ajustaEsqEsq(aux);
+			else 							// se tiver um filho direito, é caso esq-dir
+				ajustaEsqDir(aux);
+		}
+		if (aux->fb > 1) {
+			if (aux->dir->dir != NULL) 		// se tiver um filho direito, é caso dir-dir 
+				ajustaDirDir(aux);
+			else
+				ajustaDirEsq(aux);			// se tiver um filho esquerdo, é caso dir-esq
+		}
+		raiz = aux;
+		aux = aux->pai;
 	}
-	return;
+	return raiz;
 }
 
 
 //---------------------------------------
-//	12. Mínimo OK
+//	FUNÇÃO PARA BUSCA
+//---------------------------------------
+
+//---------------------------------------
+//	13. Busca iterativa OK
+//---------------------------------------
+
+// ATENÇÃO: a busca não está tratando os casos em que o nó não está na árvore. Vamos tratar? Se sim, como fica na continuação do programa?
+
+tNo *busca (int c, tNo *no)				// busca a partir da raiz
+{ 
+	while ((no != NULL) && (c != no->chave)) {	// percorre  a AVL até achar o nó com o valor C buscado
+		if (c < no->chave) 
+			no = no->esq;
+		else
+			no = no->dir;
+	}
+	return no;
+}
+
+//---------------------------------------
+//	FUNÇÃO PARA EXCLUSÃO
+//---------------------------------------
+
+//---------------------------------------
+//	14. Ajusta pai 
+//---------------------------------------
+void ajustaPai (tNo *no, tNo *novo)
+{
+	if (no->pai->esq == no)
+		no->pai->esq = novo;
+	else
+		no->pai->dir = novo;
+	if (novo != NULL)
+		novo->pai = no->pai;
+	return;
+}
+
+//---------------------------------------
+//	15. Mínimo OK
 //---------------------------------------
 // FAZER VERSÃO ITERATIVA
-tNo *min (tNo *no)
+tNo *min(tNo *no)
 {
 	if (no->esq == NULL)
 		return no;
 	else
-		return min (no->esq);
+		return min(no->esq);
 }
 
 //---------------------------------------
-//	13. Sucessor 
+//	16. Sucessor 
 //---------------------------------------
 // RETORNA NULL SE FOR O NUMERO MAIS ALTO! (Segmentation Fault)
 // IMPORTANTE PARA A EXCLUSÂO ESSA INFORMAÇÂO
-tNo *sucessor (tNo *no)
+tNo *sucessor(tNo *no)
 {
 	tNo *s = NULL;
-
 	if (no->dir != NULL)
-		return min (no->dir);
+		return min(no->dir);
 	else {
 		s = no->pai;
 		while ((s != NULL) && (no == s->dir)) {
@@ -361,30 +295,90 @@ tNo *sucessor (tNo *no)
 }
 
 //---------------------------------------
-//	16. Delete
+//	17. Exclusão
 //---------------------------------------
-/*void del (tNode *node) {
-	if ((node->left == NULL) && (node->rigth == NULL)) {
-		adjustFather (node, NULL);
-		remove (node);									// verificar se eh um free mesmo
+/*tNo *exclui(tNo *no) 
+{
+	tNo *pai = no->pai;
+	if ((no->esq == NULL) && (no->dir == NULL)) {	// se o nó a ser removido for um no folha
+		ajustaPai(no, NULL);
+		free(no);
 	}
-	else 
-		if (node->left == NULL) {
-		adjustFather (node, node->right);
-		remove (node);
+	else if (no->esq == NULL) {						// se o nó a ser removido tiver apenas filho direito
+			ajustaPai(no, no->dir);					// é substituído pelo filho direito
+			free(no);
 		}
-		else
-			if (node->right == NULL) {
-				adjustFather (node, node->left);
-				remove (node);
+		else if (no->dir == NULL) {					// se o no a ser removido tiver apenas filho esquerdo
+				ajustaPai(no, no->esq);				// é substituído pelo filho esquerdo
+				free(no);
 			}
 			else {
-				tNode *s = successor (node);
-				adjustFather (s, s->right);
-				s->left = node->left;
-				s->right = node->right;
-				adjustFather (node, s);
-				remove (node);
+				tNo *s = sucessor(no);				// usa técnica do sucessor caso o nó tenha dois filhos
+				pai = s->pai;
+				ajustaPai(s, s->dir);
+				s->esq = no->esq;
+				s->dir = s->dir;
+				ajustaPai(no, s);					// CHECAR SE TEM DE FAZER ALGUM TRATAMENTO DE ERRO SE FOR RAIZ
+				free (no);
+			}
+	return pai;										// tem de retornar este nó para fazer o ajuste da AVL no main
+}*/
+
+void exclui(tNo *no) 
+{
+	tNo *pai = no->pai;
+	if ((no->esq == NULL) && (no->dir == NULL)) {	// se o nó a ser removido for um no folha
+		ajustaPai(no, NULL);
+		ajustaAVL(pai);
+		free(no);
+	}
+	else if (no->esq == NULL) {						// se o nó a ser removido tiver apenas filho direito
+			ajustaPai(no, no->dir);					// é substituído pelo filho direito
+			ajustaAVL(pai);
+			free(no);
+		}
+		else if (no->dir == NULL) {					// se o no a ser removido tiver apenas filho esquerdo
+				ajustaPai(no, no->esq);				// é substituído pelo filho esquerdo
+				ajustaAVL(pai);
+				free(no);
+			}
+			else {
+				tNo *s = sucessor(no);				// usa técnica do sucessor caso o nó tenha dois filhos
+				pai = s->pai;
+				ajustaPai(s, s->dir);
+				s->esq = no->esq;
+				s->dir = s->dir;
+				ajustaPai(no, s);					// CHECAR SE TEM DE FAZER ALGUM TRATAMENTO DE ERRO SE FOR RAIZ
+				ajustaAVL(pai);
+				free (no);
 			}
 }
-*/
+
+
+//---------------------------------------
+//	FUNÇÃO PARA IMPRESSÃO
+//---------------------------------------
+
+//---------------------------------------
+//	18. Visita OK
+//---------------------------------------
+void visita(tNo *no, int h) 
+{
+	printf("%d,%d fb: %d\n", no->chave, h, no->fb);
+	//if (no->pai != NULL)
+	//	printf("o nó pai de %d é %d\n", no->chave, no->pai->chave);
+	return;
+}
+
+//---------------------------------------
+//	19. Impressão em Ordem OK
+//---------------------------------------
+void imprimeEmOrdem(tNo *no, int h)
+{
+	if (no != NULL) {
+		imprimeEmOrdem(no->esq, h+1);
+		visita(no, h);
+		imprimeEmOrdem(no->dir, h+1);
+	}
+	return;
+}

@@ -37,6 +37,14 @@ int main () {
 			raiz = ajustaAVL(no);
 		}
 		printf("====================================================\n");
+		if (op == 'r') {
+			no = busca (valor, raiz);
+			exclui(no);
+			//tNo *pai = exclui(no);
+			imprimeEmOrdem(raiz, 0);
+			//raiz = ajustaAVL(pai);
+		}
+		printf("====================================================\n");
 		imprimeEmOrdem(raiz, 0);
 
 /*		if (op == 'r')
