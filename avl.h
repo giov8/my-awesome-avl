@@ -34,10 +34,10 @@ tNo *busca (int c, tNo *raiz);
 void ajustaPai (tNo *no, tNo *novo);
 tNo *min(tNo *no);
 tNo *sucessor(tNo *no);
-//tNo *exclui(tNo *no);
-void exclui(tNo *no);
+tNo *exclui(tNo *no);
 
 void visita(tNo *no, int h) ;
 void imprimeEmOrdem(tNo *no, int h);
+
 
 #endif

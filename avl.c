@@ -203,7 +203,7 @@ tNo *ajustaAVL(tNo *no)
 	while (aux != NULL) {					// vai percorrer a árvore do nó passado até a raiz
 		aux->fb = calculaFB(aux);
 		printf("***********************************\n");
-		printf("no: %d fator: %d\n", aux->chave, aux->fb);
+		printf("no recebido para ajuste AVL: %d fator: %d\n", aux->chave, aux->fb);
 		if (aux->fb < -1) {
 			if (aux->esq->esq != NULL)		// se tiver um filho esquerdo, é caso esq-esq
 				ajustaEsqEsq(aux);
@@ -233,7 +233,7 @@ tNo *ajustaAVL(tNo *no)
 
 // ATENÇÃO: a busca não está tratando os casos em que o nó não está na árvore. Vamos tratar? Se sim, como fica na continuação do programa?
 
-tNo *busca (int c, tNo *no)				// busca a partir da raiz
+tNo *busca (int c, tNo *no)					// busca a partir da raiz
 { 
 	while ((no != NULL) && (c != no->chave)) {	// percorre  a AVL até achar o nó com o valor C buscado
 		if (c < no->chave) 
@@ -253,13 +253,19 @@ tNo *busca (int c, tNo *no)				// busca a partir da raiz
 //---------------------------------------
 void ajustaPai (tNo *no, tNo *novo)
 {
-	if (no->pai->esq == no)
-		no->pai->esq = novo;
-	else
-		no->pai->dir = novo;
-	if (novo != NULL)
-		novo->pai = no->pai;
-	return;
+	if ((no->pai == NULL) && (novo != NULL)) {	// se o nó original for a raiz e o novo nó não for NULL				
+		novo->pai = NULL;					// ponteiro pro pai do novo nó aponta para NULL
+		return;
+	}
+	else  {
+		if (no->pai->esq == no) 			// se o nó original é um filho da esquerda
+			no->pai->esq = novo;			// ajusta ponteiro da esquerda do pai para o novo nó
+		else 								// se o nó original é um filho da direita
+			no->pai->dir = novo;			// ajusta ponteiro da direita do pai para o novo nó
+		if (novo != NULL)							
+			novo->pai = no->pai;			// ponteiro pro pai do novo nó aponta para NULL
+		return;
+	}
 }
 
 //---------------------------------------
@@ -297,9 +303,9 @@ tNo *sucessor(tNo *no)
 //---------------------------------------
 //	17. Exclusão
 //---------------------------------------
-/*tNo *exclui(tNo *no) 
+tNo *exclui(tNo *no) 
 {
-	tNo *pai = no->pai;
+	tNo *pai = no->pai;								// guarda pai do nó para retornar e fazer ajuste de AVL a partir daí
 	if ((no->esq == NULL) && (no->dir == NULL)) {	// se o nó a ser removido for um no folha
 		ajustaPai(no, NULL);
 		free(no);
@@ -314,46 +320,17 @@ tNo *sucessor(tNo *no)
 			}
 			else {
 				tNo *s = sucessor(no);				// usa técnica do sucessor caso o nó tenha dois filhos
-				pai = s->pai;
-				ajustaPai(s, s->dir);
-				s->esq = no->esq;
-				s->dir = s->dir;
-				ajustaPai(no, s);					// CHECAR SE TEM DE FAZER ALGUM TRATAMENTO DE ERRO SE FOR RAIZ
+				pai = s->pai;						// guarda o pai do sucessor para retornar e fazer ajuste da AVL a partir daí
+				ajustaPai(s, s->dir);				// conecta filho direito do sucessor ao pai do sucessor
+				s->esq = no->esq;					// transforma filho esquerdo do nó que será removido em filho esquerdo do sucessor
+				no->esq->pai = s;					// ajusta ponteiro para pai do filho esquerdo 
+				s->dir = no->dir;					// transforma filho direito do nó que será removido em filho direito do sucessor
+				no->dir->pai = s;					// ajusta ponteiro para pai do filho direito 
+				ajustaPai(no, s);					// conecta sucessor ao pai do nó que será removido					
 				free (no);
 			}
 	return pai;										// tem de retornar este nó para fazer o ajuste da AVL no main
-}*/
-
-void exclui(tNo *no) 
-{
-	tNo *pai = no->pai;
-	if ((no->esq == NULL) && (no->dir == NULL)) {	// se o nó a ser removido for um no folha
-		ajustaPai(no, NULL);
-		ajustaAVL(pai);
-		free(no);
-	}
-	else if (no->esq == NULL) {						// se o nó a ser removido tiver apenas filho direito
-			ajustaPai(no, no->dir);					// é substituído pelo filho direito
-			ajustaAVL(pai);
-			free(no);
-		}
-		else if (no->dir == NULL) {					// se o no a ser removido tiver apenas filho esquerdo
-				ajustaPai(no, no->esq);				// é substituído pelo filho esquerdo
-				ajustaAVL(pai);
-				free(no);
-			}
-			else {
-				tNo *s = sucessor(no);				// usa técnica do sucessor caso o nó tenha dois filhos
-				pai = s->pai;
-				ajustaPai(s, s->dir);
-				s->esq = no->esq;
-				s->dir = s->dir;
-				ajustaPai(no, s);					// CHECAR SE TEM DE FAZER ALGUM TRATAMENTO DE ERRO SE FOR RAIZ
-				ajustaAVL(pai);
-				free (no);
-			}
 }
-
 
 //---------------------------------------
 //	FUNÇÃO PARA IMPRESSÃO
@@ -364,7 +341,7 @@ void exclui(tNo *no)
 //---------------------------------------
 void visita(tNo *no, int h) 
 {
-	printf("%d,%d fb: %d\n", no->chave, h, no->fb);
+	printf("%d,%d, fb: %d\n", no->chave, h, no->fb);	// APAGAR FB
 	//if (no->pai != NULL)
 	//	printf("o nó pai de %d é %d\n", no->chave, no->pai->chave);
 	return;

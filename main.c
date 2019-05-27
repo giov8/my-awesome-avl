@@ -39,10 +39,10 @@ int main () {
 		printf("====================================================\n");
 		if (op == 'r') {
 			no = busca (valor, raiz);
-			exclui(no);
-			//tNo *pai = exclui(no);
+			//exclui(no, raiz);
+			tNo *pai = exclui(no);
 			imprimeEmOrdem(raiz, 0);
-			//raiz = ajustaAVL(pai);
+			raiz = ajustaAVL(pai);
 		}
 		printf("====================================================\n");
 		imprimeEmOrdem(raiz, 0);
