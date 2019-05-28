@@ -10,52 +10,31 @@
 #include <stdlib.h>
 #include "avl.h"
 
-int main () {
+int main ()
+{
+	// **INICIALIZAÇÕES ** //
+	int valor = 0;						// Variável valor a ser lido
+	tNo *raiz = inicializaAVL();		// Inicializa árvore vazia
 
-	int valor = 0;
-	tNo *raiz = inicializaAVL();
-	tNo *no = NULL;
-
-	char op = getchar();
-	scanf("%d", &valor);
-	raiz = insere(valor, raiz);
-
-	imprimeEmOrdem(raiz, 0);
-
-	op = getchar ();					// enter ou barra ene
-
+	// ** LEITURA DAS ENTRADAS ** //
 	while (1) {							// looping infinito para tratar entradas seguintes
-		printf("====================================================\n");
-		op = getchar ();
+		char op = getchar ();			// op (operação) vai receber a operação (insere [i] ou remove [r]) 
 		if (op == EOF) break;			// sai do looping quando chega ao fim das entradas
-		scanf("%d", &valor);
-		//printf("operação: %c, valor: %d\n", op, valor);
+		scanf("%d", &valor);			// lê o valor da chave a ser adicionada ou removida
 
-		if (op == 'i') {
-			printf("###### insere %d ######\n", valor);
-			no = insere(valor, raiz);
-			imprimeEmOrdem(raiz, 0);
-			raiz = ajustaAVL(no);
-		}
-		printf("====================================================\n");
-		if (op == 'r') {
-			printf("###### remove %d ######\n", valor);
-			no = busca (valor, raiz);
-			//exclui(no, raiz);
-			tNo *pai = exclui(no);
-			imprimeEmOrdem(raiz, 0);
-			raiz = ajustaAVL(pai);
+		if (op == 'i')
+			// Para INSERIR um novo nó, a função 'insere' é chamada e retorna o nó que foi inserido
+			// Esse nó, será mandando pra função 'ajustaAVL', que retorna a nova raíz da árvore.
+			raiz = ajustaAVL(insere(valor, raiz));
+		if (op == 'r')
+			// Para REMOVER um novo nó, a função 'busca' é chamada e retorna o nó que se encontra
+			// o valor a ser removido.
+			// Esse nó, será mandando pra função 'ajustaAVL', que retorna a nova raíz da árvore.
+			raiz = ajustaAVL(exclui(busca(valor, raiz)));
 
-			//raiz = ajustaAVL(exclui(busca(valor, raiz)))
-		}
-		printf("====================================================\n");
-		imprimeEmOrdem(raiz, 0);
-
-/*		if (op == 'r')
-			no = busca(valor, raiz);
-			remove(no);
-*/
 		op = getchar(); 						// Recebe o "Enter" ou '\n'
 	}
+
+	// ** IMPRESSÃO / SAÍDA ** //
 	imprimeEmOrdem(raiz, 0);
 }

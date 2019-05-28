@@ -9,37 +9,38 @@
 #ifndef __AVL__
 #define __AVL__
 
-typedef struct tNo 
-{
+// ** DEFINIÇÕES ** //
+typedef struct tNo {
 	int chave, fb;
 	struct tNo *esq, *dir, *pai;
 } tNo;
 
-tNo *inicializaAVL(void);
-tNo *criaNo(int c);
-tNo *insere(int v, tNo *raiz);
+// ** 1 - FUNÇÕES DE INICIALIZAÇÃO ** //
+tNo *inicializaAVL(void);					
+tNo *criaNo(int c);					
 
-int altura(tNo *no);
-int calculaFB(tNo *no);
-tNo *rotDir(tNo *no);
+// ** 2 - FUNÇÕES PARA AJUSTE ** //
+int altura(tNo *no);					
+int calculaFB(tNo *no);					
+tNo *rotDir(tNo *no);				
 tNo *rotEsq(tNo *no);
-void ajustaEsqEsq(tNo *no);
-void ajustaDirDir(tNo *no);
-void ajustaEsqDir(tNo *no);
-void ajustaDirEsq(tNo *no);
+void ajustaEsqEsq(tNo *no);			
+void ajustaDirDir(tNo *no);			
+void ajustaEsqDir(tNo *no);			
+void ajustaDirEsq(tNo *no);			
 tNo *ajustaAVL(tNo *no);
 
-tNo *busca (int c, tNo *raiz);
-
+// ** 3 - FUNÇÕES DE APOIO ** //
 void ajustaPai (tNo *no, tNo *novo);
-tNo *min(tNo *no);
-tNo *max(tNo *raiz); //***
-tNo *antecessor (tNo *no); //***
-tNo *sucessor(tNo *no);
-tNo *exclui(tNo *no);
+tNo *max(tNo *raiz);				
+tNo *antecessor (tNo *no);			
 
-void visita(tNo *no, int h) ;
+// ** 4 - FUNÇÕES DE OPERAÇÕES ** //
+tNo *busca (int c, tNo *raiz);
+tNo *insere(int v, tNo *raiz);	
+tNo *exclui(tNo *no);				
+
+// ** 5 - FUNÇÕES PARA IMPRESSÃO ** // 
+void visita(tNo *no, int h);		
 void imprimeEmOrdem(tNo *no, int h);
-
-
 #endif
