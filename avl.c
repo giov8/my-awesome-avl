@@ -245,7 +245,7 @@ tNo *busca (int c, tNo *no)					// busca a partir da raiz
 }
 
 //---------------------------------------
-//	FUNÇÃO PARA EXCLUSÃO
+//	FUNÇÕES PARA EXCLUSÃO
 //---------------------------------------
 
 //---------------------------------------
@@ -268,10 +268,23 @@ void ajustaPai (tNo *no, tNo *novo)
 	}
 }
 
+
+//---------------------------------------
+//	15. Máximo
+//---------------------------------------
+tNo *max(tNo *raiz)
+{
+	tNo *aux = raiz;
+	while (aux->dir != NULL) {
+		aux = aux->dir;
+	}
+	return aux;
+}
+
+
 //---------------------------------------
 //	15. Mínimo OK
 //---------------------------------------
-// FAZER VERSÃO ITERATIVA
 tNo *min(tNo *no)
 {
 	if (no->esq == NULL)
@@ -279,6 +292,25 @@ tNo *min(tNo *no)
 	else
 		return min(no->esq);
 }
+
+//---------------------------------------
+//	16. Antecessor
+//---------------------------------------
+tNo *antecessor (tNo *no)
+{
+	tNo *s = NULL;
+	if (no->esq != NULL)
+			return max(no->esq);
+	else {
+		s = no->pai;
+		while ((s != NULL) && (no == s->esq)) {
+			no = s;
+			s = s->pai;
+		}
+	}
+	return s;
+}
+
 
 //---------------------------------------
 //	16. Sucessor 

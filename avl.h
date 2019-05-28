@@ -33,6 +33,8 @@ tNo *busca (int c, tNo *raiz);
 
 void ajustaPai (tNo *no, tNo *novo);
 tNo *min(tNo *no);
+tNo *max(tNo *raiz); //***
+tNo *antecessor (tNo *no); //***
 tNo *sucessor(tNo *no);
 tNo *exclui(tNo *no);
 
