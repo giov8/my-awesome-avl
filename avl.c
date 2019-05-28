@@ -146,7 +146,7 @@ void ajustaEsqEsq(tNo *no)
 	printf("no a ser rotacionado? %d\n", no->chave);
 	no = rotDir(no);
 	printf("no esq esq: %d\n", no->chave);						// rotaciona o nó para direita
-	printf("pai %d\n", no->pai->chave);
+	//printf("pai %d\n", no->pai->chave);
 	no->fb = calculaFB(no);
 
 	printf("nao deu merda acima\n");
@@ -333,9 +333,42 @@ tNo *sucessor(tNo *no)
 }
 
 //---------------------------------------
-//	17. Exclusão
+//	17. Exclusão - Versão Antecessor
 //---------------------------------------
 tNo *exclui(tNo *no) 
+{
+	tNo *pai = no->pai;								// guarda pai do nó para retornar e fazer ajuste de AVL a partir daí
+	if ((no->esq == NULL) && (no->dir == NULL)) {	// se o nó a ser removido for um no folha
+		ajustaPai(no, NULL);
+		free(no);
+	}
+	else if (no->esq == NULL) {						// se o nó a ser removido tiver apenas filho direito
+			ajustaPai(no, no->dir);					// é substituído pelo filho direito
+			free(no);
+		}
+		else if (no->dir == NULL) {					// se o no a ser removido tiver apenas filho esquerdo
+				ajustaPai(no, no->esq);				// é substituído pelo filho esquerdo
+				free(no);
+			}
+			else {
+				tNo *s = antecessor(no);			// usa técnica do antecessor caso o nó tenha dois filhos
+				pai = s->pai;						// guarda o pai do antecessor para retornar e fazer ajuste da AVL a partir daí
+				ajustaPai(s, s->dir);				// conecta filho direito do sucessor ao pai do sucessor
+				s->esq = no->esq;					// transforma filho esquerdo do nó que será removido em filho esquerdo do sucessor
+				no->esq->pai = s;					// ajusta ponteiro para pai do filho esquerdo 
+				s->dir = no->dir;					// transforma filho direito do nó que será removido em filho direito do sucessor
+				no->dir->pai = s;					// ajusta ponteiro para pai do filho direito 
+				ajustaPai(no, s);					// conecta sucessor ao pai do nó que será removido					
+				free (no);
+			}
+	return pai;										// tem de retornar este nó para fazer o ajuste da AVL no main
+}
+
+
+//---------------------------------------
+//	17. Exclusão - VERSÃO SUCESSOR!
+//---------------------------------------
+/*tNo *exclui(tNo *no) 
 {
 	tNo *pai = no->pai;								// guarda pai do nó para retornar e fazer ajuste de AVL a partir daí
 	if ((no->esq == NULL) && (no->dir == NULL)) {	// se o nó a ser removido for um no folha
@@ -362,7 +395,7 @@ tNo *exclui(tNo *no)
 				free (no);
 			}
 	return pai;										// tem de retornar este nó para fazer o ajuste da AVL no main
-}
+}*/
 
 //---------------------------------------
 //	FUNÇÃO PARA IMPRESSÃO

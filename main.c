@@ -32,12 +32,14 @@ int main () {
 		//printf("operação: %c, valor: %d\n", op, valor);
 
 		if (op == 'i') {
+			printf("###### insere %d ######\n", valor);
 			no = insere(valor, raiz);
 			imprimeEmOrdem(raiz, 0);
 			raiz = ajustaAVL(no);
 		}
 		printf("====================================================\n");
 		if (op == 'r') {
+			printf("###### remove %d ######\n", valor);
 			no = busca (valor, raiz);
 			//exclui(no, raiz);
 			tNo *pai = exclui(no);
@@ -56,21 +58,4 @@ int main () {
 		op = getchar(); 						// Recebe o "Enter" ou '\n'
 	}
 	imprimeEmOrdem(raiz, 0);
-
-	no = max(raiz);
-	printf("MAXIMO=%d\n", no->chave);
-	no = antecessor(busca(20, raiz));
-	printf("ANTECESSOR DO 20 É: %d\n", no->chave);
-	no = antecessor(busca(30, raiz));
-	printf("ANTECESSOR DO 30 É: %d\n", no->chave);
-	no = antecessor(busca(40, raiz));
-	printf("ANTECESSOR DO 40 É: %d\n", no->chave);
-	no = antecessor(busca(45, raiz));
-	printf("ANTECESSOR DO 45 É: %d\n", no->chave);
-	no = antecessor(busca(48, raiz));
-	printf("ANTECESSOR DO 48 É: %d\n", no->chave);
-	no = antecessor(busca(50, raiz));
-	printf("ANTECESSOR DO 50 É: %d\n", no->chave);
-	no = antecessor(busca(10, raiz));
-	printf("ANTECESSOR DO 10 É: %d\n", no->chave);
 }
