@@ -18,11 +18,11 @@
 //	1.1 Inicialização
 // DESCRIÇÃO: inicializa a AVL vazia.
 // Criada para manter a característica
-// de TAD.
+// de TAD
 //---------------------------------------
 tNo *inicializaAVL(void)
 {
-	return NULL;							//inicializa a AVL vazia
+	return NULL;							// inicializa a AVL vazia
 }
 
 //---------------------------------------
@@ -33,12 +33,12 @@ tNo *inicializaAVL(void)
 //---------------------------------------
 tNo *criaNo(int c)				
 {
-	tNo *no = malloc(sizeof (tNo)); 		//aloca memória para novo nó
+	tNo *no = malloc(sizeof (tNo)); 		// aloca memória para novo nó
 	no->chave = c;
 	no->dir = NULL;
 	no->esq = NULL;
-	no->pai = NULL;							//ponteiro pai para NULL, pois é raiz
-	no->fb = 0; 							//fator de balanceamento 0
+	no->pai = NULL;							// ponteiro pai para NULL, pois é raiz
+	no->fb = 0; 							// fator de balanceamento 0
 	return no;	
 }
 
@@ -47,8 +47,8 @@ tNo *criaNo(int c)
 //--------------------------------------
 //---------------------------------------
 //	2.1 Altura da árvore
-// DESCRIÇÃO: Retorna 0 com árvore vazia
-// 1 de tiver só raiz, 2 se um filho...
+// DESCRIÇÃO: Retorna 0 com árvore vazia,
+// 1 se tiver só raiz, 2 se um filho...
 //---------------------------------------
 int altura(tNo *no)
 {
@@ -66,7 +66,7 @@ int altura(tNo *no)
 //	2.2 Calcula fator de balanceamento
 // DESCRIÇÃO: Retorna um int com o fator
 // de balanceamento. Criada, também, pa-
-// ra manter a característica de TAD.
+// ra manter a característica de TAD
 //---------------------------------------
 int calculaFB(tNo *no)
 {
@@ -75,51 +75,51 @@ int calculaFB(tNo *no)
 
 //---------------------------------------
 // 2.3 Rotação para direita 
-// DESCRIÇÃO: Rotaciona o no de entrada p/
+// DESCRIÇÃO: Rotaciona o nó de entrada p/
 // a direita, ajusta os pais e retorna o
 // nó que ficou na posição onde o nó de
-// entrada estava.
+// entrada estava
 //---------------------------------------
 tNo *rotDir(tNo *no)
 {
-	tNo *aux = no->esq;						// Cria um auxiliar, que é o filho esquerdo do nó
-	no->esq = aux->dir;						// O(s) filho(s) direito (s) do auxiliar são filho(s) esquerdo(s) do no
-	if (no->pai != NULL) {					// O filho do pai do nó vira o auxiliar
+	tNo *aux = no->esq;						// cria um auxiliar, que é o filho esquerdo do nó
+	no->esq = aux->dir;						// o filho direito do auxiliar é filho esquerdo do nó
+	if (no->pai != NULL) {					// o filho do pai do nó vira o auxiliar
 		if (no->pai->esq == no)
 			no->pai->esq = aux;
 		else
 			no->pai->dir = aux;
 	}
-	if (aux->dir != NULL)					// Apenas se o no aux tiver filho direito
-		aux->dir->pai = no;					// O pai do filho direito de aux vai ser o no
-	aux->dir = no;							// O filho direito de aux será o no
-	aux->pai = no->pai;						// o pai do no vira pai do aux
-	no->pai = aux;							// aux vira pai do no
+	if (aux->dir != NULL)					// se o nó aux tiver filho direito
+		aux->dir->pai = no;					// o pai do filho direito de aux vai ser o nó
+	aux->dir = no;							// o filho direito de aux será o nó
+	aux->pai = no->pai;						// o pai do nó vira pai do aux
+	no->pai = aux;							// aux vira pai do nó
 	return aux;	
 }
 
 //---------------------------------------
 //	2.4 Rotação para esquerda 
-// DESCRIÇÃO: Rotaciona o no de entrada p/
+// DESCRIÇÃO: Rotaciona o nó de entrada p/
 // a esquerda, ajusta os pais e retorna o
 // nó que ficou na posição onde o nó de
-// entrada estava.
+// entrada estava
 //---------------------------------------
 tNo *rotEsq(tNo *no)
 {
-	tNo *aux = no->dir;						// Cria um auxiliar, que é o filho direito do nó
-	no->dir = aux->esq;						// O(s) filho(s) esquerdo (s) do auxiliar são filho(s) esquerdo(s) do no
-	if (no->pai != NULL) {					// O filho do pai do nó vira o auxiliar
+	tNo *aux = no->dir;						// cria um auxiliar, que é o filho direito do nó
+	no->dir = aux->esq;						// o filho esquerdo do auxiliar é filho esquerdo do nó
+	if (no->pai != NULL) {					// o filho do pai do nó vira o auxiliar
 		if (no->pai->esq == no)
 			no->pai->esq = aux;
 		else
 			no->pai->dir = aux;
 	}
-	if (aux->esq != NULL)					// Apenas se o no aux tiver filho esquerdo
-		aux->esq->pai = no;					// O pai do filho esquerdo de aux vai ser o no
-	aux->esq = no;							// O filho esquerdo de aux será o no
-	aux->pai = no->pai;						// o pai do no vira pai do aux
-	no->pai = aux;							// aux vira pai do no
+	if (aux->esq != NULL)					// se o nó aux tiver filho esquerdo
+		aux->esq->pai = no;					// o pai do filho esquerdo de aux vai ser o nó
+	aux->esq = no;							// o filho esquerdo de aux será o nó
+	aux->pai = no->pai;						// o pai do nó vira pai do aux
+	no->pai = aux;							// aux vira pai do nó
 	return aux;
 }
 
@@ -157,10 +157,10 @@ void ajustaDirDir(tNo *no)
 //-----------------------------------------
 void ajustaEsqDir(tNo *no)
 {
-	no = rotEsq (no->esq);					// Transforma em caso esquerda-esquerda
+	no = rotEsq (no->esq);					// transforma em caso esquerda-esquerda
 	no->fb = calculaFB(no);
 	no->esq->fb = calculaFB(no->esq);
-	ajustaEsqEsq (no->pai);					// Ajusta o pai
+	ajustaEsqEsq (no->pai);					// ajusta o pai
 }
 
 //-----------------------------------------
@@ -171,36 +171,36 @@ void ajustaEsqDir(tNo *no)
 //-----------------------------------------
 void ajustaDirEsq(tNo *no)
 {
-	no = rotDir(no->dir);					// Transforma em caso direita-direita
+	no = rotDir(no->dir);					// transforma em caso direita-direita
 	no->fb = calculaFB(no);
 	no->dir->fb = calculaFB(no->dir);
-	ajustaDirDir(no->pai);					// Ajusta o pai
+	ajustaDirDir(no->pai);					// ajusta o pai
 }
 
 //---------------------------------------
 //	2.9 Ajusta Árvore AVL 
 // DESCRIÇÃO: Procura e corrige desbalan-
 // ceamentos na árvore, sempre subindo
-// pelo pai. Devolve uma nova raíz para
+// pelo pai. Devolve uma nova raiz para
 // a árvore, que pode ter sido modificada
 //---------------------------------------
 tNo *ajustaAVL(tNo *no)
 {		
 	tNo *raiz = no;
 	tNo *aux = no;
-	while (aux != NULL) {					// Vai percorrer a árvore do nó passado até a raiz
+	while (aux != NULL) {					// vai percorrer a árvore do nó passado até a raiz
 		aux->fb = calculaFB(aux);
 		if (aux->fb < -1) {
-			if (aux->esq->esq != NULL)		// Se tiver um filho esquerdo, é caso esq-esq
+			if (aux->esq->esq != NULL)		// se tiver um filho esquerdo, é caso esq-esq
 				ajustaEsqEsq(aux);
-			else 							// Se tiver um filho direito, é caso esq-dir
+			else 							// se tiver um filho direito, é caso esq-dir
 				ajustaEsqDir(aux);
 		}
 		if (aux->fb > 1) {
-			if (aux->dir->dir != NULL) 		// Se tiver um filho direito, é caso dir-dir 
+			if (aux->dir->dir != NULL) 		// se tiver um filho direito, é caso dir-dir 
 				ajustaDirDir(aux);
 			else
-				ajustaDirEsq(aux);			// Se tiver um filho esquerdo, é caso dir-esq
+				ajustaDirEsq(aux);			// se tiver um filho esquerdo, é caso dir-esq
 		}
 		raiz = aux;
 		aux = aux->pai;
@@ -214,8 +214,8 @@ tNo *ajustaAVL(tNo *no)
 
 //---------------------------------------
 // 3.1 Ajusta pai 
-// DESCRIÇÃO: faz o ajuste do pai antes
-// de dar free no nó na exclusão
+// DESCRIÇÃO: faz o ajuste do pai para ser
+// possível dar free no nó na exclusão
 //---------------------------------------
 void ajustaPai (tNo *no, tNo *novo)
 {
@@ -243,33 +243,31 @@ tNo *max(tNo *raiz)
 {
 	tNo *aux = raiz;
 	while (aux->dir != NULL) {
-		aux = aux->dir;					// O número mais a direita é o maior 
+		aux = aux->dir;							// o número mais a direita é o maior (máximo) 
 	}
 	return aux;
 }
 
-
 //---------------------------------------
 // 3.3 Antecessor
 // DESCRIÇÃO: Retorna o antecessor do nó
-// de entrada.  Retorna NULL se já for o
+// de entrada. Retorna NULL se já for o
 // número mais baixo.
 //---------------------------------------
 tNo *antecessor (tNo *no)
 {
 	tNo *s = NULL;
-	if (no->esq != NULL)							// O antecessor é o número mais alto da sub-árvore a direita
+	if (no->esq != NULL)						// o antecessor é o número mais alto da sub-árvore a direita
 			return max(no->esq);
 	else {
 		s = no->pai;
-		while ((s != NULL) && (no == s->esq)) { 	// Sobe na árvore enquanto for o nó esquerdo
+		while ((s != NULL) && (no == s->esq)) { // sobe na árvore enquanto for o nó esquerdo
 			no = s;
 			s = s->pai;
 		}
 	}
 	return s;
 }
-
 
 //--------------------------------------
 //	4 - FUNÇÕES DE OPERAÇÃO
@@ -278,7 +276,7 @@ tNo *antecessor (tNo *no)
 //---------------------------------------
 //	4.1 Busca iterativa
 // DESCRIÇÃO: Busca uma chave c a partir
-// dá raíz
+// da raiz
 //---------------------------------------
 tNo *busca (int c, tNo *no)					
 { 
@@ -294,16 +292,16 @@ tNo *busca (int c, tNo *no)
 //---------------------------------------
 //	4.2 Inserção iterativa
 // DESCRIÇÃO: insere novo nó, como uma
-// BST e retorna o nó inserido.
+// BST, e retorna o nó inserido
 //---------------------------------------
-tNo *insere(int v, tNo *raiz)  			// recebe a raiz	
+tNo *insere(int v, tNo *raiz)  				// recebe a raiz	
 {	
 	tNo *no, *pai;
-	if (raiz == NULL) 					// Se a raiz for nula
-		return criaNo(v);				// Cria o primeiro nó na raiz
+	if (raiz == NULL) 						// se a raiz for nula
+		return criaNo(v);					// cria o primeiro nó na raiz
 	no = raiz;
 
-	while (no != NULL) {				// Percorre a AVL para inserir na folha
+	while (no != NULL) {					// percorre a AVL para inserir na folha
 		pai = no;
 		if (v < no->chave)
 			no = no->esq;
@@ -311,7 +309,7 @@ tNo *insere(int v, tNo *raiz)  			// recebe a raiz
 			no = no->dir;
 	}
 
-	no = criaNo(v);						// Cria o nó na folha e, na sequência, ajusta os ponteiros
+	no = criaNo(v);							// cria o nó na folha e, na sequência, ajusta os ponteiros
 	if (v < pai->chave)
 		pai->esq = no;
 	else
@@ -320,17 +318,16 @@ tNo *insere(int v, tNo *raiz)  			// recebe a raiz
 	return no;
 }
 
-
 //---------------------------------------
-//	4.3 Exclusão - Versão Antecessor
+//	4.3 Exclusão - Versão com antecessor
 // DESCRIÇÃO: Remove um nó de entrada e
 // retorna outro nó para ser usado no a-
-// juste da AVL, posterior
+// juste da AVL, posteriormente
 //---------------------------------------
 tNo *exclui(tNo *no) 
 {
 	tNo *pai = no->pai;								// guarda pai do nó para retornar e fazer ajuste de AVL a partir daí
-	if ((no->esq == NULL) && (no->dir == NULL)) {	// se o nó a ser removido for um no folha
+	if ((no->esq == NULL) && (no->dir == NULL)) {	// se o nó a ser removido for um nó folha
 		ajustaPai(no, NULL);
 		free(no);
 	}
@@ -338,7 +335,7 @@ tNo *exclui(tNo *no)
 			ajustaPai(no, no->dir);					// é substituído pelo filho direito
 			free(no);
 		}
-		else if (no->dir == NULL) {					// se o no a ser removido tiver apenas filho esquerdo
+		else if (no->dir == NULL) {					// se o nó a ser removido tiver apenas filho esquerdo
 				ajustaPai(no, no->esq);				// é substituído pelo filho esquerdo
 				free(no);
 			}

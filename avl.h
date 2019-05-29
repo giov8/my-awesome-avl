@@ -31,12 +31,12 @@ void ajustaDirEsq(tNo *no);
 tNo *ajustaAVL(tNo *no);
 
 // ** 3 - FUNÇÕES DE APOIO ** //
-void ajustaPai (tNo *no, tNo *novo);
+void ajustaPai(tNo *no, tNo *novo);
 tNo *max(tNo *raiz);				
-tNo *antecessor (tNo *no);			
+tNo *antecessor(tNo *no);			
 
 // ** 4 - FUNÇÕES DE OPERAÇÕES ** //
-tNo *busca (int c, tNo *raiz);
+tNo *busca(int c, tNo *raiz);
 tNo *insere(int v, tNo *raiz);	
 tNo *exclui(tNo *no);				
 
