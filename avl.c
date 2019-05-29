@@ -99,7 +99,7 @@ tNo *rotDir(tNo *no)
 }
 
 //---------------------------------------
-//	2.3 Rotação para esquerda 
+//	2.4 Rotação para esquerda 
 // DESCRIÇÃO: Rotaciona o no de entrada p/
 // a esquerda, ajusta os pais e retorna o
 // nó que ficou na posição onde o nó de
@@ -124,7 +124,7 @@ tNo *rotEsq(tNo *no)
 }
 
 //-----------------------------------------
-//	2.4 Ajusta Árvore AVL: esquerda-esquerda
+//	2.5 Ajusta Árvore AVL: esquerda-esquerda
 // DESCRIÇÃO: faz o ajuste do caso e atua-
 // liza os fatores de balanceamento modi-
 // ficados
@@ -137,7 +137,7 @@ void ajustaEsqEsq(tNo *no)
 }
 
 //-----------------------------------------
-//	2.5 Ajusta Árvore AVL: direita-direita
+//	2.6 Ajusta Árvore AVL: direita-direita
 // DESCRIÇÃO: faz o ajuste do caso e atua-
 // liza os fatores de balanceamento modi-
 // ficados
@@ -150,7 +150,7 @@ void ajustaDirDir(tNo *no)
 }
 
 //-----------------------------------------
-//	2.6 Ajusta Árvore AVL: esquerda-direita
+//	2.7 Ajusta Árvore AVL: esquerda-direita
 // DESCRIÇÃO: faz o ajuste do caso e atua-
 // liza os fatores de balanceamento modi-
 // ficados
@@ -164,7 +164,7 @@ void ajustaEsqDir(tNo *no)
 }
 
 //-----------------------------------------
-//	2.7 Ajusta Árvore AVL: direita-esquerda
+//	2.8 Ajusta Árvore AVL: direita-esquerda
 // DESCRIÇÃO: faz o ajuste do caso e atua-
 // liza os fatores de balanceamento modi-
 // ficados
@@ -178,7 +178,7 @@ void ajustaDirEsq(tNo *no)
 }
 
 //---------------------------------------
-//	2.8 Ajusta Árvore AVL 
+//	2.9 Ajusta Árvore AVL 
 // DESCRIÇÃO: Procura e corrige desbalan-
 // ceamentos na árvore, sempre subindo
 // pelo pai. Devolve uma nova raíz para
@@ -209,11 +209,11 @@ tNo *ajustaAVL(tNo *no)
 }
 
 //--------------------------------------
-//	2 - FUNÇÕES DE APOIO
+//	3 - FUNÇÕES DE APOIO
 //--------------------------------------
 
 //---------------------------------------
-// 2.1 Ajusta pai 
+// 3.1 Ajusta pai 
 // DESCRIÇÃO: faz o ajuste do pai antes
 // de dar free no nó na exclusão
 //---------------------------------------
@@ -235,7 +235,7 @@ void ajustaPai (tNo *no, tNo *novo)
 }
 
 //---------------------------------------
-// 2.2 Máximo
+// 3.2 Máximo
 // DESCRIÇÃO: Retorna o máximo valor da
 // sub-árvore a partir do nó de entrada
 //---------------------------------------
@@ -250,7 +250,7 @@ tNo *max(tNo *raiz)
 
 
 //---------------------------------------
-// 2.3 Antecessor
+// 3.3 Antecessor
 // DESCRIÇÃO: Retorna o antecessor do nó
 // de entrada.  Retorna NULL se já for o
 // número mais baixo.
@@ -272,11 +272,11 @@ tNo *antecessor (tNo *no)
 
 
 //--------------------------------------
-//	2 - FUNÇÕES DE OPERAÇÃO
+//	4 - FUNÇÕES DE OPERAÇÃO
 //--------------------------------------
 
 //---------------------------------------
-//	13. Busca iterativa
+//	4.1 Busca iterativa
 // DESCRIÇÃO: Busca uma chave c a partir
 // dá raíz
 //---------------------------------------
@@ -292,7 +292,7 @@ tNo *busca (int c, tNo *no)
 }
 
 //---------------------------------------
-//	3. Inserção iterativa
+//	4.2 Inserção iterativa
 // DESCRIÇÃO: insere novo nó, como uma
 // BST e retorna o nó inserido.
 //---------------------------------------
@@ -322,7 +322,7 @@ tNo *insere(int v, tNo *raiz)  			// recebe a raiz
 
 
 //---------------------------------------
-//	17. Exclusão - Versão Antecessor
+//	4.3 Exclusão - Versão Antecessor
 // DESCRIÇÃO: Remove um nó de entrada e
 // retorna outro nó para ser usado no a-
 // juste da AVL, posterior
@@ -357,11 +357,11 @@ tNo *exclui(tNo *no)
 }
 
 //---------------------------------------
-//	4 - FUNÇÕES PARA IMPRESSÃO
+//	5 - FUNÇÕES PARA IMPRESSÃO
 //---------------------------------------
 
 //---------------------------------------
-// 4.1 Visita
+// 5.1 Visita
 // DESCRIÇÃO: Faz a visita, que no caso é
 // a impressão
 //---------------------------------------
@@ -372,7 +372,7 @@ void visita(tNo *no, int h)
 }
 
 //---------------------------------------
-// 4.2 Impressão em Ordem
+// 5.2 Impressão em Ordem
 // DESCRIÇÃO: Faz a impressão EM ORDEM
 //---------------------------------------
 void imprimeEmOrdem(tNo *no, int h)
